@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lolirift.Client", "lolirift
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lolirift.Host", "lolirift.Host\lolirift.Host.csproj", "{B50DC966-3ED6-4893-B40A-67A4813DD030}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{DC725E0D-BB92-4376-981C-707FE028FF92}"
+	ProjectSection(SolutionItems) = preProject
+		Libs\fun.Core.dll = Libs\fun.Core.dll
+		Libs\fun.IO.dll = Libs\fun.IO.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
