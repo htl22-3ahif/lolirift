@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Environment>
+
+  <Lib Path="lolirift.dll"/>
+  
+  <Entity Name="Grid">
+    <Element Type="GridElement">
+      <Field Name="Width">100</Field>
+      <Field Name="Height">100</Field>
+    </Element>
+  </Entity>
+  
+  <Entity Name="NetworkHandler">
+    <Element Type="NetworkAccepterElement">
+      <Field Name="Port">844</Field>
+    </Element>
+  </Entity>
+  
+</Environment>
