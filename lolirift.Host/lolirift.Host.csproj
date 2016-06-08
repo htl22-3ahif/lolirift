@@ -35,10 +35,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="fun.Core">
-      <HintPath>..\bin\fun.Core.dll</HintPath>
+      <HintPath>..\Libs\fun.Core.dll</HintPath>
     </Reference>
     <Reference Include="fun.IO">
-      <HintPath>..\bin\fun.IO.dll</HintPath>
+      <HintPath>..\Libs\fun.IO.dll</HintPath>
     </Reference>
     <Reference Include="System" />
   </ItemGroup>
