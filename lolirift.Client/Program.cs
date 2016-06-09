@@ -25,7 +25,8 @@ namespace lolirift.Client
             var inControllers = new Controller[]
             {
                 new InHelloController(data),
-                new InBuildController(data)
+                new InBuildController(data),
+                new InSeeController(data)
             };
             
             var exControllers = new Controller[]
@@ -62,7 +63,7 @@ namespace lolirift.Client
                         length = net.Read(buffer, 0, buffer.Length);
                         json += Encoding.UTF8.GetString(buffer, 0, length);
                     }
-
+                    
                     var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
 
                     try

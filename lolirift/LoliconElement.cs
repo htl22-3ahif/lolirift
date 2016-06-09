@@ -30,15 +30,18 @@ namespace lolirift
 
         public override void Initialize()
         {
-            data = new DataStore();
-
-            data.Environment = Environment;
-            data.Tcp = Tcp;
+            data = new DataStore()
+            {
+                Environment = Environment,
+                Tcp = Tcp,
+                Lolicon = this
+            }; ;
 
             exControllers = new Controller[]
             {
                 new ExBuildController(data),
-                new ExHelloController(data)
+                new ExHelloController(data),
+                new ExSeeController(data)
             };
 
             new Task(() => { while (true) ReceivePackets(); } ).Start();

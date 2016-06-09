@@ -22,9 +22,9 @@ namespace lolirift.Controllers.External
 
         public override void Execute(Dictionary<string, string> dict)
         {
-            var owneds = data.Environment.Entities
-                .Select(e => e.GetElement<LoliriftElement>())
-                .Where(e => e.Lolicon == data.Lolicon).ToArray();
+            var owneds = data.Environment.Entities.Where(e => e.Elements.Any(el => el.GetType().IsSubclassOf(typeof(LoliriftElement))))
+                .Select(e => e.Elements.First(el => el.GetType().IsSubclassOf(typeof(LoliriftElement))))
+                .Where(e => (e as LoliriftElement).Lolicon == data.Lolicon).ToArray();
 
             var seeable = new List<object>();
 
@@ -43,7 +43,12 @@ namespace lolirift.Controllers.External
                         for (int i = -owned.Range; i < owned.Range; i++)
                             for (int j = -owned.Range; j < owned.Range; j++)
                                 if (i * i + j * j <= owned.Range * owned.Range)
-                                    seeable.Add(grid.Get(i + x, j + y));
+                                    seeable.Add(new
+                                    {
+                                        x = i+x,
+                                        y = j+y,
+                                        information = grid.Get(i + x, j + y)
+                                    });
                     }
 
             var json = new
