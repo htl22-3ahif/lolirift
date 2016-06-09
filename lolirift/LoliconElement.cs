@@ -55,11 +55,12 @@ namespace lolirift
             var json = string.Empty;
             var openBracketCount = buffer.Count(b => b == '{');
             var closedBracketCount = buffer.Count(b => b == '}');
+            json += Encoding.UTF8.GetString(buffer, 0, length);
 
             while (openBracketCount != closedBracketCount)
             {
-                json += Encoding.UTF8.GetString(buffer, 0, length);
                 length = net.Read(buffer, 0, buffer.Length);
+                json += Encoding.UTF8.GetString(buffer, 0, length);
             }
 
             var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);

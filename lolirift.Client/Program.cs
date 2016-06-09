@@ -33,9 +33,9 @@ namespace lolirift.Client
             {
                 Console.WriteLine("You are now allowed to write your command!");
                 Console.WriteLine("We recommend using \"hello\"");
-                var msg = Console.ReadLine();
+                var line = Console.ReadLine();
 
-                dict.Add("content", msg);
+                dict.Add("controller", line);
 
                 var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dict));
 

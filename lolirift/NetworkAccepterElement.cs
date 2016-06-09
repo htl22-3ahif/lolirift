@@ -39,6 +39,8 @@ namespace lolirift
 
             lock(Environment)
                 Environment.AddEntity(entity);
+
+            entity.Initialize();
         }
     }
 }

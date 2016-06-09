@@ -22,8 +22,10 @@ namespace lolirift.Controllers
         {
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();
 
+            var allTypes = Assembly.GetExecutingAssembly().ExportedTypes;
+
             var types = Assembly.GetExecutingAssembly().ExportedTypes
-                .Where(t => t.IsAssignableFrom(typeof(BuildableElement)))
+                .Where(t => t.IsSubclassOf(typeof(BuildableElement)))
                 .ToArray();
 
             buildables = new BuildableElement[types.Length];
