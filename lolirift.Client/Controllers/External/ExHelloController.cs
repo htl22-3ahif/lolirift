@@ -20,10 +20,5 @@ namespace lolirift.Client.Controllers.External
         {
             Console.WriteLine(dict["message"]);
         }
-
-        public override string ToJson(string[] args)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -38,9 +38,10 @@ namespace lolirift.Client
                 Console.WriteLine("We recommend using \"hello\"");
                 var line = Console.ReadLine();
 
+                dict = new Dictionary<string, string>();
 
                 dict.Add("controller", line.Split(' ')[0]);
-                dict.Add("args", line.Substring(line.IndexOf(' ') + 1));
+                dict.Add("args", line.Split(' ').Length > 1 ? (line.Substring(line.IndexOf(' ') + 1)) : string.Empty);
 
                 foreach (var controller in inControllers)
                     if (controller.Executable(dict))

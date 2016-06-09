@@ -12,7 +12,7 @@ namespace lolirift.Client.Controllers.Internal
         public InHelloController(DataStore data) : base(data) { }
 
         public override string Keyword { get { return "hello"; } }
-        public override string[] NeededKeys { get { return new string[] { "controller", "args" }; } }
+        public override string[] NeededKeys { get { return new string[] { "args" }; } }
 
         public override void Execute(Dictionary<string, string> dict)
         {

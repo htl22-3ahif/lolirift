@@ -20,10 +20,10 @@ namespace lolirift.Client.Controllers
 
         public bool Executable(Dictionary<string, string> dict)
         {
-            if (!dict.ContainsKey(GetType().Name.ToLower()))
+            if (!dict.ContainsKey("controller"))
                 return false;
 
-            if (dict[GetType().Name.ToLower()] != Keyword)
+            if (dict["controller"] != Keyword)
                 return false;
 
             if (NeededKeys == null)
