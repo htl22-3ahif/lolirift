@@ -8,7 +8,7 @@ using Environment = fun.Core.Environment;
 
 namespace lolirift
 {
-    public abstract class BuildableElement : Element
+    public abstract class BuildableElement : LoliriftElement
     {
         public abstract string Keyword { get; }
         public abstract int Width { get; }

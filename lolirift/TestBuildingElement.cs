@@ -13,8 +13,9 @@ namespace lolirift
         public override string Keyword { get { return "test"; } }
         public override int Height { get { return 0; } }
         public override int Width { get { return 0; } }
+        public override int Range { get { return 5; } }
 
-        public TestBuildingElement(Environment environment, Entity entity) 
+        public TestBuildingElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
         }

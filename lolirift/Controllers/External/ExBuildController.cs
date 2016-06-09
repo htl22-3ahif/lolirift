@@ -36,7 +36,7 @@ namespace lolirift.Controllers.External
 
         public override void Execute(Dictionary<string, string> dict)
         {
-            var keyword = dict["building"];
+            var keyword = dict["name"];
             var posX = int.Parse(dict["x"]);
             var posY = int.Parse(dict["y"]);
             BuildableElement building;
@@ -64,7 +64,7 @@ namespace lolirift.Controllers.External
 
             for (int x = posX; x <= posX + building.Width; x++)
                 for (int y = posY; y <= posY + building.Height; y++)
-                    grid.Set(entity, x, y);
+                    grid.Set(entity.GetElement(building.GetType()) as LoliriftElement, x, y);
 
             lock (data.Environment)
                 data.Environment.AddEntity(entity);

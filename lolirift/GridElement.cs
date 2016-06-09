@@ -10,7 +10,7 @@ namespace lolirift
 {
     public sealed class GridElement : Element
     {
-        private Entity[] grid;
+        private LoliriftElement[] loliriftGrid;
 
         public int Height;
         public int Width;
@@ -19,19 +19,19 @@ namespace lolirift
         {
         }
 
-        public void Set(Entity entity, int x, int y)
+        public void Set(LoliriftElement lolirift, int x, int y)
         {
-            grid[x + Width * y] = entity;
+            loliriftGrid[x + Width * y] = lolirift;
         }
 
-        public Entity Get(int x, int y)
+        public LoliriftElement Get(int x, int y)
         {
-            return grid[x + Width * y];
+            return loliriftGrid[x + Width * y];
         }
 
         public override void Initialize()
         {
-            grid = new Entity[Height * Width];
+            loliriftGrid = new LoliriftElement[Height * Width];
         }
     }
 }

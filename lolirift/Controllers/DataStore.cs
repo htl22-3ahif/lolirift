@@ -13,6 +13,7 @@ namespace lolirift.Controllers
     {
         public Environment Environment { get; set; }
         public TcpClient Tcp { get; set; }
+        public LoliconElement Lolicon { get; set; }
 
         public DataStore()
         {

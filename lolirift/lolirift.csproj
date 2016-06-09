@@ -50,6 +50,7 @@
     <Compile Include="GridElement.cs" />
     <Compile Include="LoliconElement.cs" />
     <Compile Include="NetworkAccepterElement.cs" />
+    <Compile Include="LoliriftElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBuildingElement.cs" />
   </ItemGroup>
