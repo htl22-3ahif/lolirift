@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lolirift.Client.Controllers
+namespace lolirift.Client.Controllers.External
 {
-    internal sealed class HelloController : Controller
+    internal sealed class ExHelloController : Controller
     {
         public override string Keyword { get { return "hello"; } }
         public override string[] NeededKeys { get { return null; } }
 
-        public HelloController(DataStore data)
+        public ExHelloController(DataStore data)
             : base(data)
         {
         }

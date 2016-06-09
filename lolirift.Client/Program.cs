@@ -1,4 +1,5 @@
 ﻿using lolirift.Client.Controllers;
+using lolirift.Client.Controllers.Internal;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,12 @@ namespace lolirift.Client
             var tcp = new TcpClient();
             var dict = new Dictionary<string, string>();
 
-            var data  =new DataStore();
-            var controllers = new Controller[]
+            var data = new DataStore();
+            data.Tcp = tcp;
+
+            var inControllers = new Controller[]
             {
-                new HelloController(data)
+                new InHelloController(data)
             };
 
             Console.WriteLine("Connecting to the host...");
@@ -35,14 +38,13 @@ namespace lolirift.Client
                 Console.WriteLine("We recommend using \"hello\"");
                 var line = Console.ReadLine();
 
-                dict.Add("controller", line);
 
-                var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dict));
+                dict.Add("controller", line.Split(' ')[0]);
+                dict.Add("args", line.Substring(line.IndexOf(' ') + 1));
 
-                Console.WriteLine("Sending message...");
-                tcp.GetStream().Write(jsonData, 0, jsonData.Length);
-                Console.WriteLine("Sending successful!");
-                Console.WriteLine();
+                foreach (var controller in inControllers)
+                    if (controller.Executable(dict))
+                        controller.Execute(dict);
             }
         }
     }

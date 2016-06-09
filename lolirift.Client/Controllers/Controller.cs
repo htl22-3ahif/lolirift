@@ -37,6 +37,5 @@ namespace lolirift.Client.Controllers
         }
 
         public abstract void Execute(Dictionary<string, string> dict);
-        public abstract string ToJson(string[] args);
     }
 }
