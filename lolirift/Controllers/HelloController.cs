@@ -10,7 +10,6 @@ namespace lolirift.Controllers
     internal sealed class HelloController : Controller
     {
         public override string Keyword { get { return "hello"; } }
-        public override Controller[] SubControllers { get { return null; } }
         public override string[] NeededKeys { get { return null; } }
 
         public HelloController(DataStore data)
@@ -23,8 +22,8 @@ namespace lolirift.Controllers
             var response = new Dictionary<string, string>();
             var net = data.Tcp.GetStream();
 
-            dict.Add("message", "Hello!");
-            var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(dict));
+            response.Add("message", "Hello!");
+            var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
 
             net.Write(jsonData, 0, jsonData.Length);
         }

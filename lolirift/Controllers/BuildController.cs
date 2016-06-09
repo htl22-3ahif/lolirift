@@ -15,7 +15,6 @@ namespace lolirift.Controllers
         private GridElement grid;
 
         public override string Keyword { get { return "build"; } }
-        public override Controller[] SubControllers { get { return null; } }
         public override string[] NeededKeys { get { return new[] { "building", "x", "y" }; } }
 
         public BuildController(DataStore data)
@@ -61,8 +60,8 @@ namespace lolirift.Controllers
                     "The given Y({0}) arguments do not fit in the grid with the building's Height({1})",
                     posY, building.Height));
 
-            for (int x = posX; x < building.Width; x++)
-                for (int y = posY; y < building.Height; y++)
+            for (int x = posX; x <= posX + building.Width; x++)
+                for (int y = posY; y <= posY + building.Height; y++)
                     grid.Set(entity, x, y);
 
             lock (data.Environment)
