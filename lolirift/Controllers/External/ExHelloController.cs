@@ -22,6 +22,7 @@ namespace lolirift.Controllers.External
             var response = new Dictionary<string, string>();
             var net = data.Tcp.GetStream();
 
+            response.Add("controller", "hello");
             response.Add("message", "Hello!");
             var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
 
