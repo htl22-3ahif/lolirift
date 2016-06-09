@@ -13,6 +13,7 @@ namespace lolirift
         public abstract string Keyword { get; }
         public abstract int Width { get; }
         public abstract int Height { get; }
+        public abstract Type Loli { get; }
 
         public BuildableElement(Environment environment, Entity entity) 
             : base(environment, entity)

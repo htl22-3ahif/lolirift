@@ -10,28 +10,34 @@ namespace lolirift
 {
     public sealed class GridElement : Element
     {
-        private LoliriftElement[] loliriftGrid;
+        private GridField[] loliriftGrid;
 
         public int Height;
         public int Width;
 
-        public GridElement(Environment environment, Entity entity) : base(environment, entity)
+        public GridElement(Environment environment, Entity entity) 
+            : base(environment, entity)
         {
         }
 
         public void Set(LoliriftElement lolirift, int x, int y)
         {
-            loliriftGrid[x + Width * y] = lolirift;
+            loliriftGrid[x + Width * y].Lolirift = lolirift;
         }
 
-        public LoliriftElement Get(int x, int y)
+        public GridField Get(int x, int y)
         {
             return loliriftGrid[x + Width * y];
         }
 
         public override void Initialize()
         {
-            loliriftGrid = new LoliriftElement[Height * Width];
+            loliriftGrid = new GridField[Height * Width];
         }
+    }
+
+    public struct GridField
+    {
+        public LoliriftElement Lolirift;
     }
 }

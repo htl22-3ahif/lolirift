@@ -14,6 +14,7 @@ namespace lolirift
         public override int Height { get { return 0; } }
         public override int Width { get { return 0; } }
         public override int Range { get { return 5; } }
+        public override Type Loli { get { return typeof(TestLoliElement); } }
 
         public TestBuildingElement(Environment environment, Entity entity)
             : base(environment, entity)
