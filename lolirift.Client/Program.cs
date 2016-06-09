@@ -41,34 +41,37 @@ namespace lolirift.Client
             Console.WriteLine("Starting to receive packets by host");
             new Task(() =>
             {
-                var net = tcp.GetStream();
-
-                var buffer = new byte[4096];
-                var length = net.Read(buffer, 0, buffer.Length);
-
-                if (length == 0)
-                    return;
-
-                var json = string.Empty;
-                var openBracketCount = buffer.Count(b => b == '{');
-                var closedBracketCount = buffer.Count(b => b == '}');
-                json += Encoding.UTF8.GetString(buffer, 0, length);
-
-                while (openBracketCount != closedBracketCount)
+                while (true)
                 {
-                    length = net.Read(buffer, 0, buffer.Length);
+                    var net = tcp.GetStream();
+
+                    var buffer = new byte[4096];
+                    var length = net.Read(buffer, 0, buffer.Length);
+
+                    if (length == 0)
+                        return;
+
+                    var json = string.Empty;
+                    var openBracketCount = buffer.Count(b => b == '{');
+                    var closedBracketCount = buffer.Count(b => b == '}');
                     json += Encoding.UTF8.GetString(buffer, 0, length);
-                }
 
-                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+                    while (openBracketCount != closedBracketCount)
+                    {
+                        length = net.Read(buffer, 0, buffer.Length);
+                        json += Encoding.UTF8.GetString(buffer, 0, length);
+                    }
 
-                try
-                {
-                    foreach (var controller in exControllers)
-                        if (controller.Executable(dict))
-                            controller.Execute(dict);
+                    var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                    try
+                    {
+                        foreach (var controller in exControllers)
+                            if (controller.Executable(dict))
+                                controller.Execute(dict);
+                    }
+                    catch (Exception e) { Console.WriteLine("Executing controller went wrong! Failure Message: " + e.Message); }
                 }
-                catch (Exception e) { Console.WriteLine("Executing controller went wrong! Failure Message: " + e.Message); }
             }).Start();
 
             while (true)
