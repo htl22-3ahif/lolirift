@@ -7,9 +7,9 @@ using fun.Core;
 using System.Reflection;
 using System.Runtime.Serialization;
 
-namespace lolirift.Controllers
+namespace lolirift.Controllers.External
 {
-    internal sealed class BuildController : Controller
+    internal sealed class ExBuildController : Controller
     {
         private BuildableElement[] buildables;
         private GridElement grid;
@@ -17,7 +17,7 @@ namespace lolirift.Controllers
         public override string Keyword { get { return "build"; } }
         public override string[] NeededKeys { get { return new[] { "building", "x", "y" }; } }
 
-        public BuildController(DataStore data)
+        public ExBuildController(DataStore data)
             : base(data)
         {
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();

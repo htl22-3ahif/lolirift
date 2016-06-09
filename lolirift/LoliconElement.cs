@@ -10,12 +10,14 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using lolirift.Controllers;
+using lolirift.Controllers.External;
 
 namespace lolirift
 {
     public sealed class LoliconElement : Element
     {
-        private Controller[] controllers;
+        private Controller[] exControllers;
+        private Controller[] inControllers;
         private DataStore data;
 
         public TcpClient Tcp { get; set; }
@@ -33,10 +35,10 @@ namespace lolirift
             data.Environment = Environment;
             data.Tcp = Tcp;
 
-            controllers = new Controller[]
+            exControllers = new Controller[]
             {
-                new BuildController(data),
-                new HelloController(data)
+                new ExBuildController(data),
+                new ExHelloController(data)
             };
 
             new Task(() => { while (true) ReceivePackets(); } ).Start();
@@ -67,7 +69,7 @@ namespace lolirift
 
             try
             {
-                foreach (var controller in controllers)
+                foreach (var controller in exControllers)
                     if (controller.Executable(dict))
                         controller.Execute(dict);
             }
