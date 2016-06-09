@@ -24,9 +24,10 @@ namespace lolirift.Client
 
             var inControllers = new Controller[]
             {
-                new InHelloController(data)
+                new InHelloController(data),
+                new InBuildController(data)
             };
-
+            
             var exControllers = new Controller[]
             {
                 new ExHelloController(data)
@@ -77,7 +78,6 @@ namespace lolirift.Client
             while (true)
             {
                 Console.WriteLine("You are now allowed to write your command!");
-                Console.WriteLine("We recommend using \"hello\"");
                 var line = Console.ReadLine();
 
                 var dict = new Dictionary<string, string>();
@@ -88,6 +88,7 @@ namespace lolirift.Client
                 foreach (var controller in inControllers)
                     if (controller.Executable(dict))
                         controller.Execute(dict);
+                Console.WriteLine();
             }
         }
     }

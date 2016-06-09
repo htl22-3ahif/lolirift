@@ -71,7 +71,14 @@ namespace lolirift
             {
                 foreach (var controller in exControllers)
                     if (controller.Executable(dict))
+                    {
+                        Console.WriteLine("A packet was sent refering to the build controller");
+                        Console.WriteLine("Processing...");
+
                         controller.Execute(dict);
+
+                        Console.WriteLine("Processing successful!");
+                    }
             }
             catch (Exception e) { Console.WriteLine("Executing controller went wrong! Failure Message: " + e.Message); }
         }

@@ -15,7 +15,7 @@ namespace lolirift.Controllers.External
         private GridElement grid;
 
         public override string Keyword { get { return "build"; } }
-        public override string[] NeededKeys { get { return new[] { "building", "x", "y" }; } }
+        public override string[] NeededKeys { get { return new[] { "name", "x", "y" }; } }
 
         public ExBuildController(DataStore data)
             : base(data)
