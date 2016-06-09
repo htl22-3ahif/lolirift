@@ -46,6 +46,7 @@
     <Compile Include="Controllers\External\ExHelloController.cs" />
     <Compile Include="Controllers\Internal\InBuildController.cs" />
     <Compile Include="Controllers\Internal\InHelloController.cs" />
+    <Compile Include="Controllers\Internal\InSeeController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
