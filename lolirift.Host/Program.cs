@@ -15,15 +15,15 @@ namespace lolirift.Host
         static void Main(string[] args)
         {
             string[] libraries;
-            var envionrment = new EnvironmentXmlReader().Load(new FileStream("lolirift.xml", FileMode.Open), out libraries)[0];
+            var environment = new EnvironmentXmlReader().Load(new FileStream("lolirift.xml", FileMode.Open), out libraries)[0];
 
             Console.WriteLine("Environment ready!");
 
-            envionrment.Initialize();
+            environment.Initialize();
             while (true)
             {
                 Thread.Sleep(20);
-                envionrment.Update(0.02);
+                environment.Update(0.02);
             }
         }
     }
