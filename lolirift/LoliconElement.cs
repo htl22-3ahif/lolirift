@@ -63,15 +63,14 @@ namespace lolirift
             }
 
             var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
-            var args = dict["message"].Split(' ');
 
             try
             {
                 foreach (var controller in controllers)
-                    if (controller.TryParse(args))
-                        controller.Parse(args);
+                    if (controller.Executable(dict))
+                        controller.Execute(dict);
             }
-            catch (Exception e) { Console.WriteLine("Controller parsing went wrong! Failure Message: " + e.Message); }
+            catch (Exception e) { Console.WriteLine("Executing controller went wrong! Failure Message: " + e.Message); }
         }
     }
 }

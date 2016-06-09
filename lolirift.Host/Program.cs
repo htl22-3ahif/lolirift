@@ -15,7 +15,7 @@ namespace lolirift.Host
         static void Main(string[] args)
         {
             string[] libraries;
-            var envionrment = new EnvironmentXmlReader().Load(new FileStream(args[0], FileMode.Open), out libraries)[0];
+            var envionrment = new EnvironmentXmlReader().Load(new FileStream("lolirift.xml", FileMode.Open), out libraries)[0];
 
             Console.WriteLine("Environment ready!");
 

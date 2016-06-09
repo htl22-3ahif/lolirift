@@ -13,43 +13,31 @@ namespace lolirift.Controllers
         protected DataStore data;
 
         public abstract string Keyword { get; }
-        public abstract Controller[] SubControllers { get; }
+        public abstract string[] NeededKeys { get; }
 
         public Controller(DataStore data)
         {
             this.data = data;
         }
 
-        public bool TryParse(string[] args)
+        public bool Executable(Dictionary<string, string> dict)
         {
-            if (args.Length < 1)
+            if (!dict.ContainsKey(GetType().Name.ToLower()))
                 return false;
 
-            if (args[0] != Keyword)
+            if (dict[GetType().Name.ToLower()] != Keyword)
                 return false;
+
+            if (NeededKeys == null)
+                return true;
+
+            foreach (var key in NeededKeys)
+                if (!dict.ContainsKey(key))
+                    return false;
 
             return true;
         }
 
-        public void Parse(string[] args)
-        {
-            args = args.Skip(1).ToArray();
-
-            if (args.Length == 0)
-                Execute(args);
-            else
-            {
-                if (SubControllers != null || SubControllers.Length == 0)
-                {
-                    foreach (var c in SubControllers)
-                        if (c.Keyword == args[0])
-                            c.Execute(args);
-                }
-                else
-                    Execute(args);
-            }
-        }
-
-        public abstract void Execute(string[] args);
+        public abstract void Execute(Dictionary<string, string> dict);
     }
 }

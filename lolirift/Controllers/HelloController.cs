@@ -11,15 +11,16 @@ namespace lolirift.Controllers
     {
         public override string Keyword { get { return "hello"; } }
         public override Controller[] SubControllers { get { return null; } }
+        public override string[] NeededKeys { get { return null; } }
 
-        public HelloController(DataStore data) 
+        public HelloController(DataStore data)
             : base(data)
         {
         }
 
-        public override void Execute(string[] args)
+        public override void Execute(Dictionary<string, string> dict)
         {
-            var dict = new Dictionary<string, string>();
+            var response = new Dictionary<string, string>();
             var net = data.Tcp.GetStream();
 
             dict.Add("message", "Hello!");

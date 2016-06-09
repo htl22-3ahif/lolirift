@@ -16,6 +16,7 @@ namespace lolirift.Controllers
 
         public override string Keyword { get { return "build"; } }
         public override Controller[] SubControllers { get { return null; } }
+        public override string[] NeededKeys { get { return new[] { "building", "x", "y" }; } }
 
         public BuildController(DataStore data)
             : base(data)
@@ -32,11 +33,11 @@ namespace lolirift.Controllers
                 buildables[i] = FormatterServices.GetUninitializedObject(types[i]) as BuildableElement;
         }
 
-        public override void Execute(string[] args)
+        public override void Execute(Dictionary<string, string> dict)
         {
-            var keyword = args[0];
-            var posX = int.Parse(args[1]);
-            var posY = int.Parse(args[2]);
+            var keyword = dict["building"];
+            var posX = int.Parse(dict["x"]);
+            var posY = int.Parse(dict["y"]);
             BuildableElement building;
 
             try { building = buildables.First(b => b.Keyword == keyword); }
@@ -64,7 +65,7 @@ namespace lolirift.Controllers
                 for (int y = posY; y < building.Height; y++)
                     grid.Set(entity, x, y);
 
-            lock(data.Environment)
+            lock (data.Environment)
                 data.Environment.AddEntity(entity);
         }
     }
