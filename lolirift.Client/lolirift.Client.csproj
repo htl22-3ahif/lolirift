@@ -41,6 +41,9 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\DataStore.cs" />
+    <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
