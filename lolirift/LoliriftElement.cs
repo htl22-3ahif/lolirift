@@ -12,6 +12,7 @@ namespace lolirift
         public LoliconElement Lolicon;
 
         public abstract int Range { get; }
+        public abstract string Name { get; }
 
         public LoliriftElement(fun.Core.Environment environment, Entity entity) 
             : base(environment, entity)

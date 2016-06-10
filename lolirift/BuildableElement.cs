@@ -10,7 +10,6 @@ namespace lolirift
 {
     public abstract class BuildableElement : LoliriftElement
     {
-        public abstract string Keyword { get; }
         public abstract int Width { get; }
         public abstract int Height { get; }
         public abstract Type Loli { get; }

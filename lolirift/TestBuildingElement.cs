@@ -10,7 +10,7 @@ namespace lolirift
 {
     public sealed class TestBuildingElement : BuildableElement
     {
-        public override string Keyword { get { return "test"; } }
+        public override string Name { get { return "test"; } }
         public override int Height { get { return 0; } }
         public override int Width { get { return 0; } }
         public override int Range { get { return 5; } }

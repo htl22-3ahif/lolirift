@@ -37,7 +37,7 @@ namespace lolirift.Controllers.External
                         {
                             x = x,
                             y = y,
-                            information = grid.Get(x, y)
+                            lolirift = grid.Get(x, y).Lolirift.Name
                         });
 
                         for (int i = -owned.Range; i < owned.Range; i++)
@@ -47,17 +47,23 @@ namespace lolirift.Controllers.External
                                     {
                                         x = i+x,
                                         y = j+y,
-                                        information = grid.Get(i + x, j + y)
+                                        lolirift = grid.Get(i + x, j + y).Lolirift != null
+                                            ? grid.Get(i + x, j + y).Lolirift.Name : string.Empty
                                     });
                     }
 
-            var json = new
+            var response = new
             {
                 controller = "see",
                 seeable = seeable.ToArray()
             };
+            
+            var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response, Formatting.None,
+                new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Include
+                }));
 
-            var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(json));
             data.Tcp.GetStream().Write(jsonData, 0, jsonData.Length);
         }
     }

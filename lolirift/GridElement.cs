@@ -10,7 +10,7 @@ namespace lolirift
 {
     public sealed class GridElement : Element
     {
-        private GridField[] loliriftGrid;
+        private GridField[] grid;
 
         public int Height;
         public int Width;
@@ -20,19 +20,23 @@ namespace lolirift
         {
         }
 
+        public override void Initialize()
+        {
+            grid = new GridField[Height * Width];
+            for (int i = 0; i < grid.Length; i++)
+            {
+                grid[i] = new GridField();
+            }
+        }
+
         public void Set(LoliriftElement lolirift, int x, int y)
         {
-            loliriftGrid[x + Width * y].Lolirift = lolirift;
+            grid[x + Width * y].Lolirift = lolirift;
         }
 
         public GridField Get(int x, int y)
         {
-            return loliriftGrid[x + Width * y];
-        }
-
-        public override void Initialize()
-        {
-            loliriftGrid = new GridField[Height * Width];
+            return grid[x + Width * y];
         }
     }
 

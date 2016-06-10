@@ -41,7 +41,7 @@ namespace lolirift.Controllers.External
             var posY = int.Parse(dict["y"]);
             BuildableElement building;
 
-            try { building = buildables.First(b => b.Keyword == keyword); }
+            try { building = buildables.First(b => b.Name == keyword); }
             catch (Exception) { throw new ArgumentException(string.Format("Building with Keyword \"{0}\" does not work", keyword)); }
 
             var entity = new Entity(keyword + DateTime.Now.ToString("yyyy-mm-dd:hh:mm:ss:ffff"), data.Environment);
