@@ -65,16 +65,24 @@ namespace lolirift
                 var j = JsonConvert.DeserializeObject(requestString) as JObject;
 
                 if (init.IsExecutable(j))
+                {
+                    Console.WriteLine("Initializing new member...");
                     init.Execute(j);
+                    Console.WriteLine("New member initialized!");
+                }
                 else
                 {
-                    var name = request.RawUrl.Split('/')[0];
+                    var name = request.RawUrl.Split('/')[1];
                     var loli = Environment.GetEntity(name).GetElement<LoliconElement>();
                     data.Lolicon = loli;
                     data.Controllers = loli.Controllers;
                     foreach (var c in loli.Controllers)
                         if (c.IsExecutable(j))
+                        {
+                            Console.WriteLine("Parsing an command...");
                             c.Execute(j);
+                            Console.WriteLine("Parsing successful!");
+                        }
                 }
 
                 response.StatusCode = 200;

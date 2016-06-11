@@ -29,7 +29,7 @@ namespace lolirift.Controllers
                 var response = JObject.FromObject(new
                 {
                     controller = "error",
-                    message = "Name already exists"
+                    exists = "true"
                 });
 
                 data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
