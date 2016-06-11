@@ -32,7 +32,8 @@ namespace lolirift.Client
 
             var exControllers = new Controller[]
             {
-                new ExHelloController(data)
+                new ExHelloController(data),
+                new ExSeeController(data)
             };
 
 

@@ -44,6 +44,7 @@
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\DataStore.cs" />
     <Compile Include="Controllers\External\ExHelloController.cs" />
+    <Compile Include="Controllers\External\ExSeeController.cs" />
     <Compile Include="Controllers\Internal\InBuildController.cs" />
     <Compile Include="Controllers\Internal\InHelloController.cs" />
     <Compile Include="Controllers\Internal\InSeeController.cs" />
