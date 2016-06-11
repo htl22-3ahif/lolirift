@@ -16,10 +16,5 @@ namespace lolirift.Client
         {
             InitializeComponent();
         }
-
-        private void LoliriftForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
