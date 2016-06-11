@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using fun.Core;
 using System.Reflection;
 using System.Runtime.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace lolirift.Controllers.External
 {
@@ -34,11 +35,11 @@ namespace lolirift.Controllers.External
                 buildables[i] = FormatterServices.GetUninitializedObject(types[i]) as BuildableElement;
         }
 
-        public override void Execute(Dictionary<string, string> dict)
+        public override void Execute(JObject j)
         {
-            var keyword = dict["name"];
-            var posX = int.Parse(dict["x"]);
-            var posY = int.Parse(dict["y"]);
+            var keyword = j["name"].ToString();
+            var posX = int.Parse(j["x"].ToString());
+            var posY = int.Parse(j["y"].ToString());
             BuildableElement building;
 
             try { building = buildables.First(b => b.Name == keyword); }

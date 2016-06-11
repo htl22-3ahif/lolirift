@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace lolirift.Client.Controllers.Internal
         public override string Keyword { get { return "see"; } }
         public override string[] NeededKeys { get { return new string[] { "args" }; } }
 
-        public override void Execute(Dictionary<string, string> dict)
+        public override void Execute(JObject j)
         {
             var response = new Dictionary<string, string>();
 

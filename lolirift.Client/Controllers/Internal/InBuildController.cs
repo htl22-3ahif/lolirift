@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,12 @@ namespace lolirift.Client.Controllers.Internal
         {
         }
 
-        public override void Execute(Dictionary<string, string> dict)
+        public override void Execute(JObject j)
         {
             var response = new Dictionary<string, string>();
             response.Add("controller", "build");
 
-            var args = dict["args"].Split(' ');
+            var args = j["args"].Select(e => e.ToString()).ToArray();
             response.Add("name", args[0]);
             response.Add("x", args[1]);
             response.Add("y", args[2]);

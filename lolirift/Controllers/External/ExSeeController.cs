@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace lolirift.Controllers.External
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();
         }
 
-        public override void Execute(Dictionary<string, string> dict)
+        public override void Execute(JObject j)
         {
             var owneds = data.Environment.Entities.Where(e => e.Elements.Any(el => el.GetType().IsSubclassOf(typeof(LoliriftElement))))
                 .Select(e => e.Elements.First(el => el.GetType().IsSubclassOf(typeof(LoliriftElement))))
@@ -40,15 +41,15 @@ namespace lolirift.Controllers.External
                             lolirift = grid.Get(x, y).Lolirift.Name
                         });
 
-                        for (int i = -owned.Range; i < owned.Range; i++)
-                            for (int j = -owned.Range; j < owned.Range; j++)
-                                if (i * i + j * j <= owned.Range * owned.Range)
+                        for (int offx = -owned.Range; offx < owned.Range; offx++)
+                            for (int offy = -owned.Range; offy < owned.Range; offy++)
+                                if (offx * offx + offy * offy <= owned.Range * owned.Range)
                                     seeable.Add(new
                                     {
-                                        x = i+x,
-                                        y = j+y,
-                                        lolirift = grid.Get(i + x, j + y).Lolirift != null
-                                            ? grid.Get(i + x, j + y).Lolirift.Name : string.Empty
+                                        x = offx + x,
+                                        y = offy + y,
+                                        lolirift = grid.Get(offx + x, offy + y).Lolirift != null
+                                            ? grid.Get(offx + x, offy + y).Lolirift.Name : null
                                     });
                     }
 
@@ -57,11 +58,11 @@ namespace lolirift.Controllers.External
                 controller = "see",
                 seeable = seeable.ToArray()
             };
-            
+
             var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response, Formatting.None,
                 new JsonSerializerSettings()
                 {
-                    NullValueHandling = NullValueHandling.Include
+                    NullValueHandling = NullValueHandling.Ignore
                 }));
 
             data.Tcp.GetStream().Write(jsonData, 0, jsonData.Length);

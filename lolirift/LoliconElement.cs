@@ -11,6 +11,7 @@ using System.IO;
 using Newtonsoft.Json;
 using lolirift.Controllers;
 using lolirift.Controllers.External;
+using Newtonsoft.Json.Linq;
 
 namespace lolirift
 {
@@ -68,17 +69,17 @@ namespace lolirift
                 json += Encoding.UTF8.GetString(buffer, 0, length);
             }
 
-            var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            var j = JsonConvert.DeserializeObject(json) as JObject;
 
             try
             {
                 foreach (var controller in exControllers)
-                    if (controller.Executable(dict))
+                    if (controller.IsExecutable(j))
                     {
                         Console.WriteLine("A packet was sent refering to the build controller");
                         Console.WriteLine("Processing...");
 
-                        controller.Execute(dict);
+                        controller.Execute(j);
 
                         Console.WriteLine("Processing successful!");
                     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using fun.Core;
 using Environment = fun.Core.Environment;
+using Newtonsoft.Json.Linq;
 
 namespace lolirift.Controllers
 {
@@ -20,24 +21,24 @@ namespace lolirift.Controllers
             this.data = data;
         }
 
-        public bool Executable(Dictionary<string, string> dict)
+        public bool IsExecutable(JObject j)
         {
-            if (!dict.ContainsKey("controller"))
+            if (j["controller"] == null)
                 return false;
 
-            if (dict["controller"] != Keyword)
+            if (j["controller"].ToString() != Keyword)
                 return false;
 
             if (NeededKeys == null)
                 return true;
-
+            
             foreach (var key in NeededKeys)
-                if (!dict.ContainsKey(key))
+                if (j[key] == null)
                     return false;
 
             return true;
         }
 
-        public abstract void Execute(Dictionary<string, string> dict);
+        public abstract void Execute(JObject j);
     }
 }

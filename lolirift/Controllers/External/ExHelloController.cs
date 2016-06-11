@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace lolirift.Controllers.External
         {
         }
 
-        public override void Execute(Dictionary<string, string> dict)
+        public override void Execute(JObject j)
         {
             var response = new Dictionary<string, string>();
             var net = data.Tcp.GetStream();

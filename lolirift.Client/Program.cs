@@ -2,6 +2,7 @@
 using lolirift.Client.Controllers.External;
 using lolirift.Client.Controllers.Internal;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,13 @@ namespace lolirift.Client
                 new InBuildController(data),
                 new InSeeController(data)
             };
-            
+
             var exControllers = new Controller[]
             {
                 new ExHelloController(data)
             };
 
-            
+
             Console.WriteLine("Connecting to the host...");
             tcp.Connect(IPAddress.Parse(endPoint[0]), int.Parse(endPoint[1]));
             Console.WriteLine("Connecting successful!");
@@ -63,14 +64,14 @@ namespace lolirift.Client
                         length = net.Read(buffer, 0, buffer.Length);
                         json += Encoding.UTF8.GetString(buffer, 0, length);
                     }
-                    
-                    var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+
+                    var j = JsonConvert.DeserializeObject(json) as JObject;
 
                     try
                     {
                         foreach (var controller in exControllers)
-                            if (controller.Executable(dict))
-                                controller.Execute(dict);
+                            if (controller.IsExecutable(j))
+                                controller.Execute(j);
                     }
                     catch (Exception e) { Console.WriteLine("Executing controller went wrong! Failure Message: " + e.Message); }
                 }
@@ -81,14 +82,15 @@ namespace lolirift.Client
                 Console.WriteLine("You are now allowed to write your command!");
                 var line = Console.ReadLine();
 
-                var dict = new Dictionary<string, string>();
-
-                dict.Add("controller", line.Split(' ')[0]);
-                dict.Add("args", line.Split(' ').Length > 1 ? (line.Substring(line.IndexOf(' ') + 1)) : string.Empty);
+                var j = JObject.FromObject(new
+                {
+                    //controller = line.Split(' ')[0],
+                    args = line.Split(' ').Skip(1)
+                });
 
                 foreach (var controller in inControllers)
-                    if (controller.Executable(dict))
-                        controller.Execute(dict);
+                    if (controller.IsExecutable(j))
+                        controller.Execute(j);
                 Console.WriteLine();
             }
         }

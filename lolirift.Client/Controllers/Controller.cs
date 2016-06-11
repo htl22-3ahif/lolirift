@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,24 +19,24 @@ namespace lolirift.Client.Controllers
             this.data = data;
         }
 
-        public bool Executable(Dictionary<string, string> dict)
+        public bool IsExecutable(JObject j)
         {
-            if (!dict.ContainsKey("controller"))
+            if (j["controller"] == null)
                 return false;
 
-            if (dict["controller"] != Keyword)
+            if (j["controller"].ToString() != Keyword)
                 return false;
 
             if (NeededKeys == null)
                 return true;
 
             foreach (var key in NeededKeys)
-                if (!dict.ContainsKey(key))
+                if (j[key] == null)
                     return false;
 
             return true;
         }
 
-        public abstract void Execute(Dictionary<string, string> dict);
+        public abstract void Execute(JObject j);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,9 @@ namespace lolirift.Client.Controllers.External
         {
         }
 
-        public override void Execute(Dictionary<string, string> dict)
+        public override void Execute(JObject j)
         {
-            Console.WriteLine(dict["message"]);
+            Console.WriteLine(j["message"].ToString());
         }
     }
 }
