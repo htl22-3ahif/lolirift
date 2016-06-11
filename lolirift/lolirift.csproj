@@ -43,13 +43,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildableElement.cs" />
-    <Compile Include="Controllers\External\ExBuildController.cs" />
+    <Compile Include="Controllers\BuildController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\DataStore.cs" />
-    <Compile Include="Controllers\External\ExHelloController.cs" />
-    <Compile Include="Controllers\External\ExInitializationController.cs" />
-    <Compile Include="Controllers\External\ExMapController.cs" />
-    <Compile Include="Controllers\External\ExSeeController.cs" />
+    <Compile Include="Controllers\HelloController.cs" />
+    <Compile Include="Controllers\InitializationController.cs" />
+    <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\SeeController.cs" />
     <Compile Include="GridElement.cs" />
     <Compile Include="LoliconElement.cs" />
     <Compile Include="LoliElement.cs" />
@@ -62,9 +62,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\Internal\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

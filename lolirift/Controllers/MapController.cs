@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 
-namespace lolirift.Client.Controllers.Internal
+namespace lolirift.Controllers
 {
-    internal sealed class InInitializationController : Controller
+    internal sealed class MapController : Controller
     {
         public override string Keyword
         {
             get
             {
-                return "init";
+                return "map";
             }
         }
 
@@ -22,24 +22,24 @@ namespace lolirift.Client.Controllers.Internal
         {
             get
             {
-                return new[] { "args" };
+                return null;
             }
         }
 
-        public InInitializationController(DataStore data) 
+        public MapController(DataStore data)
             : base(data)
         {
         }
 
         public override void Execute(JObject j)
         {
-            var args = j["args"].Select(e => e.ToString()).ToArray();
-
-            var response = JObject.FromObject(new
+            var grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();
+            var response = new
             {
-                controller = "init",
-                name = data.Name = args[0]
-            });
+                controller = "map",
+                width = grid.Width,
+                height = grid.Height
+            };
 
             var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
             data.Tcp.GetStream().Write(jsonData, 0, jsonData.Length);

@@ -8,9 +8,9 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
 
-namespace lolirift.Controllers.External
+namespace lolirift.Controllers
 {
-    internal sealed class ExBuildController : Controller
+    internal sealed class BuildController : Controller
     {
         private BuildableElement[] buildables;
         private GridElement grid;
@@ -18,7 +18,7 @@ namespace lolirift.Controllers.External
         public override string Keyword { get { return "build"; } }
         public override string[] NeededKeys { get { return new[] { "name", "x", "y" }; } }
 
-        public ExBuildController(DataStore data)
+        public BuildController(DataStore data)
             : base(data)
         {
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();

@@ -8,14 +8,14 @@ using fun.Core;
 using Environment = fun.Core.Environment;
 using Newtonsoft.Json;
 
-namespace lolirift.Controllers.External
+namespace lolirift.Controllers
 {
-    internal sealed class ExInitializationController : Controller
+    internal sealed class InitializationController : Controller
     {
         public override string Keyword { get { return "init"; } }
         public override string[] NeededKeys { get { return new[] { "name" }; } }
 
-        public ExInitializationController(DataStore data) 
+        public InitializationController(DataStore data) 
             : base(data)
         {
         }

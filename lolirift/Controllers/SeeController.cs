@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lolirift.Controllers.External
+namespace lolirift.Controllers
 {
-    internal sealed class ExSeeController : Controller
+    internal sealed class SeeController : Controller
     {
         private GridElement grid;
 
         public override string Keyword { get { return "see"; } }
         public override string[] NeededKeys { get { return null; } }
 
-        public ExSeeController(DataStore data)
+        public SeeController(DataStore data)
             : base(data)
         {
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();

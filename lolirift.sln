@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lolirift", "lolirift\lolirift.csproj", "{6EEC42BA-933E-442D-917F-248AE722811E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lolirift.Client", "lolirift.Client\lolirift.Client.csproj", "{83CDCB0F-6B28-489C-B477-D73FB26271D2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lolirift.Host", "lolirift.Host\lolirift.Host.csproj", "{B50DC966-3ED6-4893-B40A-67A4813DD030}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{DC725E0D-BB92-4376-981C-707FE028FF92}"
@@ -25,10 +23,6 @@ Global
 		{6EEC42BA-933E-442D-917F-248AE722811E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EEC42BA-933E-442D-917F-248AE722811E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EEC42BA-933E-442D-917F-248AE722811E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83CDCB0F-6B28-489C-B477-D73FB26271D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83CDCB0F-6B28-489C-B477-D73FB26271D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83CDCB0F-6B28-489C-B477-D73FB26271D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83CDCB0F-6B28-489C-B477-D73FB26271D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B50DC966-3ED6-4893-B40A-67A4813DD030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B50DC966-3ED6-4893-B40A-67A4813DD030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B50DC966-3ED6-4893-B40A-67A4813DD030}.Release|Any CPU.ActiveCfg = Release|Any CPU

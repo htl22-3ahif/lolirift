@@ -10,15 +10,13 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using lolirift.Controllers;
-using lolirift.Controllers.External;
 using Newtonsoft.Json.Linq;
 
 namespace lolirift
 {
     public sealed class LoliconElement : Element
     {
-        private Controller[] exControllers;
-        private Controller[] inControllers;
+        private Controller[] controllers;
         private DataStore data;
 
         public TcpClient Tcp { get; set; }
@@ -38,12 +36,15 @@ namespace lolirift
                 Lolicon = this
             }; ;
 
-            exControllers = new Controller[]
+            controllers = new Controller[]
             {
-                new ExBuildController(data),
-                new ExHelloController(data),
-                new ExSeeController(data)
+                new BuildController(data),
+                new HelloController(data),
+                new SeeController(data),
+                new MapController(data)
             };
+
+            data.Controllers = controllers;
 
             new Task(() => { while (true) ReceivePackets(); } ).Start();
         }
@@ -62,7 +63,7 @@ namespace lolirift
             var openBracketCount = buffer.Count(b => b == '{');
             var closedBracketCount = buffer.Count(b => b == '}');
             json += Encoding.UTF8.GetString(buffer, 0, length);
-
+            
             while (openBracketCount != closedBracketCount)
             {
                 length = net.Read(buffer, 0, buffer.Length);
@@ -73,7 +74,7 @@ namespace lolirift
 
             try
             {
-                foreach (var controller in exControllers)
+                foreach (var controller in controllers)
                     if (controller.IsExecutable(j))
                     {
                         Console.WriteLine("A packet was sent refering to the build controller");

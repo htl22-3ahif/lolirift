@@ -9,7 +9,6 @@ using System.Net.Sockets;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-using lolirift.Controllers.External;
 using lolirift.Controllers;
 
 namespace lolirift
@@ -17,7 +16,7 @@ namespace lolirift
     public sealed class NetworkAccepterElement : Element
     {
         private TcpListener listener;
-        private ExInitializationController init;
+        private InitializationController init;
         private DataStore data;
 
         public int Port;
@@ -38,7 +37,7 @@ namespace lolirift
                 Environment = Environment
             };
 
-            init = new ExInitializationController(data);
+            init = new InitializationController(data);
         }
 
         private void AcceptTcpClient(IAsyncResult res)
@@ -55,22 +54,30 @@ namespace lolirift
         {
             var net = tcp.GetStream();
             var buffer = new byte[4096];
-            int length = 0;
+            var length = 0;
+            var openBracketCount = 0;
+            var closedBracketCount = 0;
+            var json = string.Empty;
             do
             {
-                length = net.Read(buffer, 0, buffer.Length);
-            } while (length == 0);
+                do
+                {
+                    length = net.Read(buffer, 0, buffer.Length);
+                } while (length == 0);
 
-            var json = string.Empty;
-            var openBracketCount = buffer.Count(b => b == '{');
-            var closedBracketCount = buffer.Count(b => b == '}');
-            json += Encoding.UTF8.GetString(buffer, 0, length);
-
-            while (openBracketCount != closedBracketCount)
-            {
-                length = net.Read(buffer, 0, buffer.Length);
+                openBracketCount = buffer.Count(b => b == '{');
+                closedBracketCount = buffer.Count(b => b == '}');
                 json += Encoding.UTF8.GetString(buffer, 0, length);
-            }
+
+                while (openBracketCount != closedBracketCount)
+                {
+                    length = net.Read(buffer, 0, buffer.Length);
+                    json += Encoding.UTF8.GetString(buffer, 0, length);
+                }
+            } while (openBracketCount == 0);
+
+
+            json = json.Substring(json.IndexOf('{'), json.LastIndexOf('}') + 1);
 
             var j = JsonConvert.DeserializeObject(json) as JObject;
 
