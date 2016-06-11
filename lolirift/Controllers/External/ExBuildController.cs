@@ -47,7 +47,7 @@ namespace lolirift.Controllers.External
 
             var entity = new Entity(keyword + DateTime.Now.ToString("yyyy-mm-dd:hh:mm:ss:ffff"), data.Environment);
             entity.AddElement(building.GetType());
-            (entity.GetElement(building.GetType()) as LoliriftElement).Lolicon = data.Lolicon;
+            (entity.GetElement(building.GetType()) as UnitElement).Lolicon = data.Lolicon;
 
             if (posX + building.Width > grid.Width && posY + building.Height > grid.Height)
                 throw new ArgumentException(string.Format(
@@ -66,7 +66,7 @@ namespace lolirift.Controllers.External
 
             for (int x = posX; x <= posX + building.Width; x++)
                 for (int y = posY; y <= posY + building.Height; y++)
-                    grid.Set(entity.GetElement(building.GetType()) as LoliriftElement, x, y);
+                    grid.Set(entity.GetElement(building.GetType()) as UnitElement, x, y);
 
             lock (data.Environment)
                 data.Environment.AddEntity(entity);

@@ -7,7 +7,7 @@ using fun.Core;
 
 namespace lolirift
 {
-    public abstract class LoliElement : LoliriftElement
+    public abstract class LoliElement : UnitElement
     {
         public abstract int Speed { get; }
 

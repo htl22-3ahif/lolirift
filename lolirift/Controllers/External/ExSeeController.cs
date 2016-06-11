@@ -23,22 +23,22 @@ namespace lolirift.Controllers.External
 
         public override void Execute(JObject j)
         {
-            var owneds = data.Environment.Entities.Where(e => e.Elements.Any(el => el.GetType().IsSubclassOf(typeof(LoliriftElement))))
-                .Select(e => e.Elements.First(el => el.GetType().IsSubclassOf(typeof(LoliriftElement))))
-                .Where(e => (e as LoliriftElement).Lolicon == data.Lolicon).ToArray();
+            var owneds = data.Environment.Entities.Where(e => e.Elements.Any(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
+                .Select(e => e.Elements.First(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
+                .Where(e => (e as UnitElement).Lolicon == data.Lolicon).ToArray();
 
             var seeable = new List<object>();
 
             for (int x = 0; x < grid.Width; x++)
                 for (int y = 0; y < grid.Height; y++)
-                    if (owneds.Contains(grid.Get(x, y).Lolirift))
+                    if (owneds.Contains(grid.Get(x, y).Unit))
                     {
-                        var owned = grid.Get(x, y).Lolirift;
+                        var owned = grid.Get(x, y).Unit;
                         seeable.Add(new
                         {
                             x = x,
                             y = y,
-                            lolirift = grid.Get(x, y).Lolirift.Name
+                            unit = grid.Get(x, y).Unit.Name
                         });
 
                         for (int offx = -owned.Range; offx < owned.Range; offx++)
@@ -48,8 +48,8 @@ namespace lolirift.Controllers.External
                                     {
                                         x = offx + x,
                                         y = offy + y,
-                                        lolirift = grid.Get(offx + x, offy + y).Lolirift != null
-                                            ? grid.Get(offx + x, offy + y).Lolirift.Name : null
+                                        unit = grid.Get(offx + x, offy + y).Unit != null
+                                            ? grid.Get(offx + x, offy + y).Unit.Name : null
                                     });
                     }
 

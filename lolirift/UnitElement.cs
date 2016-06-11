@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace lolirift
 {
-    public abstract class LoliriftElement : Element
+    public abstract class UnitElement : Element
     {
         public LoliconElement Lolicon;
 
         public abstract int Range { get; }
         public abstract string Name { get; }
 
-        public LoliriftElement(fun.Core.Environment environment, Entity entity) 
+        public UnitElement(fun.Core.Environment environment, Entity entity) 
             : base(environment, entity)
         {
         }

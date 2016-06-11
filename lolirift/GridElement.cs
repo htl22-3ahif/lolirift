@@ -29,9 +29,9 @@ namespace lolirift
             }
         }
 
-        public void Set(LoliriftElement lolirift, int x, int y)
+        public void Set(UnitElement unit, int x, int y)
         {
-            grid[x + Width * y].Lolirift = lolirift;
+            grid[x + Width * y].Unit = unit;
         }
 
         public GridField Get(int x, int y)
@@ -42,6 +42,6 @@ namespace lolirift
 
     public struct GridField
     {
-        public LoliriftElement Lolirift;
+        public UnitElement Unit;
     }
 }

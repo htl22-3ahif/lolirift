@@ -84,7 +84,7 @@ namespace lolirift.Client
 
                 var j = JObject.FromObject(new
                 {
-                    //controller = line.Split(' ')[0],
+                    controller = line.Split(' ')[0],
                     args = line.Split(' ').Skip(1)
                 });
 
