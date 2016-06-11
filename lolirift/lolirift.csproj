@@ -47,6 +47,7 @@
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\DataStore.cs" />
     <Compile Include="Controllers\External\ExHelloController.cs" />
+    <Compile Include="Controllers\External\ExInitializationController.cs" />
     <Compile Include="Controllers\External\ExSeeController.cs" />
     <Compile Include="GridElement.cs" />
     <Compile Include="LoliconElement.cs" />

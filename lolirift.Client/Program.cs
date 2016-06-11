@@ -19,28 +19,42 @@ namespace lolirift.Client
         {
             var endPoint = args[0].Split(':');
             var tcp = new TcpClient();
-
-            var data = new DataStore();
-            data.Tcp = tcp;
-
+            var data = new DataStore()
+            {
+                Tcp = tcp
+            };
+            var init = new InInitializationController(data);
             var inControllers = new Controller[]
             {
                 new InHelloController(data),
                 new InBuildController(data),
                 new InSeeController(data)
             };
-
             var exControllers = new Controller[]
             {
                 new ExHelloController(data),
                 new ExSeeController(data)
             };
 
-
             Console.WriteLine("Connecting to the host...");
             tcp.Connect(IPAddress.Parse(endPoint[0]), int.Parse(endPoint[1]));
             Console.WriteLine("Connecting successful!");
             Console.WriteLine();
+
+            Console.Write("Write your name please: ");
+
+            {
+                var j = JObject.FromObject(new
+                {
+                    controller = "init",
+                    args = Console.ReadLine().Split(' ')
+                });
+
+                if (init.IsExecutable(j))
+                    init.Execute(j);
+                else
+                    throw new Exception();
+            }
 
             Console.WriteLine("Starting to receive packets by host");
             new Task(() =>

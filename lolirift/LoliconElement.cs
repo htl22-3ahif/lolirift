@@ -51,12 +51,12 @@ namespace lolirift
         public void ReceivePackets()
         {
             var net = Tcp.GetStream();
-
             var buffer = new byte[4096];
-            var length = net.Read(buffer, 0, buffer.Length);
-
-            if (length == 0)
-                return;
+            int length = 0;
+            do
+            {
+                length = net.Read(buffer, 0, buffer.Length);
+            } while (length == 0);
 
             var json = string.Empty;
             var openBracketCount = buffer.Count(b => b == '{');

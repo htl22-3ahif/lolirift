@@ -39,6 +39,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
@@ -47,7 +51,14 @@
     <Compile Include="Controllers\External\ExSeeController.cs" />
     <Compile Include="Controllers\Internal\InBuildController.cs" />
     <Compile Include="Controllers\Internal\InHelloController.cs" />
+    <Compile Include="Controllers\Internal\InInitializationController.cs" />
     <Compile Include="Controllers\Internal\InSeeController.cs" />
+    <Compile Include="LoliriftForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoliriftForm.Designer.cs">
+      <DependentUpon>LoliriftForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,7 +66,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="LoliriftForm.resx">
+      <DependentUpon>LoliriftForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

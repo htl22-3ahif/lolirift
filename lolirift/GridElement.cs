@@ -23,10 +23,6 @@ namespace lolirift
         public override void Initialize()
         {
             grid = new GridField[Height * Width];
-            for (int i = 0; i < grid.Length; i++)
-            {
-                grid[i] = new GridField();
-            }
         }
 
         public void Set(UnitElement unit, int x, int y)

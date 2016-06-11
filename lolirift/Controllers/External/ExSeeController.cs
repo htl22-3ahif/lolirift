@@ -33,24 +33,42 @@ namespace lolirift.Controllers.External
                 for (int y = 0; y < grid.Height; y++)
                     if (owneds.Contains(grid.Get(x, y).Unit))
                     {
-                        var owned = grid.Get(x, y).Unit;
+                        var g = grid.Get(x, y);
+                        var owned = g.Unit;
                         seeable.Add(new
                         {
                             x = x,
                             y = y,
-                            unit = grid.Get(x, y).Unit.Name
+                            information = new
+                            {
+                                unit = g.Unit.Name,
+                                owner = g.Unit.Lolicon.Entity.Name
+                            }
                         });
 
                         for (int offx = -owned.Range; offx < owned.Range; offx++)
                             for (int offy = -owned.Range; offy < owned.Range; offy++)
                                 if (offx * offx + offy * offy <= owned.Range * owned.Range)
+                                {
+                                    g = grid.Get(offx + x, offy + y);
+
+                                    if (offx == 0 && offy == 0)
+                                        continue;
+
+                                    if (g.Unit == null)
+                                        continue;
+
                                     seeable.Add(new
                                     {
                                         x = offx + x,
                                         y = offy + y,
-                                        unit = grid.Get(offx + x, offy + y).Unit != null
-                                            ? grid.Get(offx + x, offy + y).Unit.Name : null
+                                        information = new
+                                        {
+                                            unit = g.Unit.Name,
+                                            owner = g.Unit.Lolicon.Entity.Name
+                                        }
                                     });
+                                }
                     }
 
             var response = new

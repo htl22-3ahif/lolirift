@@ -25,8 +25,9 @@ namespace lolirift.Client.Controllers.External
             {
                 var x = int.Parse(s["x"].ToString());
                 var y = int.Parse(s["y"].ToString());
-                var unit = s["unit"] != null ? s["unit"].ToString() : "null";
-                Console.WriteLine("{0}/{1}:{2}", x.ToString("000"), y.ToString("000"), unit);
+                var owner = s["information"]["owner"].ToString();
+                var unit = s["information"]["unit"].ToString();
+                Console.WriteLine("{0}/{1}:{2} by {3}", x.ToString("000"), y.ToString("000"), unit, owner);
             }
         }
     }

@@ -9,5 +9,6 @@ namespace lolirift.Client.Controllers
     internal sealed class DataStore
     {
         public TcpClient Tcp { get; set; }
+        public string Name { get; set; }
     }
 }
