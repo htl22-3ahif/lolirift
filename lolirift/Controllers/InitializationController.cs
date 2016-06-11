@@ -32,15 +32,13 @@ namespace lolirift.Controllers
                     message = "Name already exists"
                 });
 
-                var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
-                data.Tcp.GetStream().Write(jsonData, 0, jsonData.Length);
-                data.Tcp.Close();
+                data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
                 return;
             }
 
             var entity = new Entity(name, data.Environment);
             entity.AddElement<LoliconElement>();
-            entity.GetElement<LoliconElement>().Tcp = data.Tcp;
+            entity.GetElement<LoliconElement>().Data = data;
 
             lock (data.Environment)
                 data.Environment.AddEntity(entity);

@@ -11,7 +11,7 @@
   </Entity>
   
   <Entity Name="NetworkHandler">
-    <Element Type="NetworkAccepterElement">
+    <Element Type="WebAccepterElement">
       <Field Name="Port">844</Field>
     </Element>
   </Entity>

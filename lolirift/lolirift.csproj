@@ -40,6 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuildableElement.cs" />
@@ -53,11 +54,11 @@
     <Compile Include="GridElement.cs" />
     <Compile Include="LoliconElement.cs" />
     <Compile Include="LoliElement.cs" />
-    <Compile Include="NetworkAccepterElement.cs" />
     <Compile Include="UnitElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBuildingElement.cs" />
     <Compile Include="TestLoliElement.cs" />
+    <Compile Include="WebAccepterElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

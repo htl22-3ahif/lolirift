@@ -9,12 +9,12 @@ using System.Net.Sockets;
 
 namespace lolirift.Controllers
 {
-    internal sealed class DataStore
+    public sealed class DataStore
     {
         public Environment Environment { get; set; }
-        public TcpClient Tcp { get; set; }
         public LoliconElement Lolicon { get; set; }
         public Controller[] Controllers { get; set; }
+        public byte[] ResponseData { get; set; }
 
         public DataStore()
         {

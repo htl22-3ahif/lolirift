@@ -41,8 +41,7 @@ namespace lolirift.Controllers
                 height = grid.Height
             };
 
-            var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
-            data.Tcp.GetStream().Write(jsonData, 0, jsonData.Length);
+            data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
         }
     }
 }

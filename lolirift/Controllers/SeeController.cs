@@ -77,13 +77,11 @@ namespace lolirift.Controllers
                 seeable = seeable.ToArray()
             };
 
-            var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response, Formatting.None,
+            data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response, Formatting.None,
                 new JsonSerializerSettings()
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 }));
-
-            data.Tcp.GetStream().Write(jsonData, 0, jsonData.Length);
         }
     }
 }

@@ -21,13 +21,10 @@ namespace lolirift.Controllers
         public override void Execute(JObject j)
         {
             var response = new Dictionary<string, string>();
-            var net = data.Tcp.GetStream();
 
             response.Add("controller", "hello");
             response.Add("message", "Hello!");
-            var jsonData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
-
-            net.Write(jsonData, 0, jsonData.Length);
+            data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
         }
     }
 }
