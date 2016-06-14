@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 using fun.Core;
 using Environment = fun.Core.Environment;
 using System.Net.Sockets;
+using System.Net.WebSockets;
 
 namespace lolirift.Controllers
 {
-    public sealed class DataStore
+    internal sealed class DataStore
     {
         public Environment Environment { get; set; }
-        public LoliconElement Lolicon { get; set; }
-        public Controller[] Controllers { get; set; }
-        public byte[] ResponseData { get; set; }
+        public string OwnerID { get; set; }
+        public Action<string> Send { get; set; }
 
         public DataStore()
         {

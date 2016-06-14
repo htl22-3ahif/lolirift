@@ -24,7 +24,9 @@ namespace lolirift.Controllers
 
             response.Add("controller", "hello");
             response.Add("message", "Hello!");
-            data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
+            var json = JsonConvert.SerializeObject(response);
+
+            data.Send(json);
         }
     }
 }

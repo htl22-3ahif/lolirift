@@ -25,7 +25,7 @@ namespace lolirift.Controllers
         {
             var owneds = data.Environment.Entities.Where(e => e.Elements.Any(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
                 .Select(e => e.Elements.First(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
-                .Where(e => (e as UnitElement).Lolicon == data.Lolicon).ToArray();
+                .Where(e => (e as UnitElement).OwnerID == data.OwnerID).ToArray();
 
             var seeable = new List<object>();
 
@@ -42,7 +42,7 @@ namespace lolirift.Controllers
                             information = new
                             {
                                 unit = g.Unit.Name,
-                                owner = g.Unit.Lolicon.Entity.Name
+                                owner = g.Unit.OwnerID
                             }
                         });
 
@@ -65,7 +65,7 @@ namespace lolirift.Controllers
                                         information = new
                                         {
                                             unit = g.Unit.Name,
-                                            owner = g.Unit.Lolicon.Entity.Name
+                                            owner = g.Unit.OwnerID
                                         }
                                     });
                                 }
@@ -77,11 +77,12 @@ namespace lolirift.Controllers
                 seeable = seeable.ToArray()
             };
 
-            data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response, Formatting.None,
+            var json = JsonConvert.SerializeObject(response, Formatting.None,
                 new JsonSerializerSettings()
                 {
                     NullValueHandling = NullValueHandling.Ignore
-                }));
+                });
+            data.Send(json);
         }
     }
 }

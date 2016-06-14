@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{DC725E0D-B
 	ProjectSection(SolutionItems) = preProject
 		Libs\fun.Core.dll = Libs\fun.Core.dll
 		Libs\fun.IO.dll = Libs\fun.IO.dll
+		Libs\websocket-sharp.dll = Libs\websocket-sharp.dll
 	EndProjectSection
 EndProject
 Global

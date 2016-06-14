@@ -34,6 +34,7 @@ namespace lolirift.Controllers
         public override void Execute(JObject j)
         {
             var grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();
+
             var response = new
             {
                 controller = "map",
@@ -41,7 +42,8 @@ namespace lolirift.Controllers
                 height = grid.Height
             };
 
-            data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
+            var json = JsonConvert.SerializeObject(response);
+            data.Send(json);
         }
     }
 }

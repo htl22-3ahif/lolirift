@@ -9,7 +9,7 @@ namespace lolirift
 {
     public abstract class UnitElement : Element
     {
-        public LoliconElement Lolicon;
+        public string OwnerID;
 
         public abstract int Range { get; }
         public abstract string Name { get; }

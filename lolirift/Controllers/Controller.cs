@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace lolirift.Controllers
 {
-    public abstract class Controller
+    internal abstract class Controller
     {
         protected DataStore data;
 

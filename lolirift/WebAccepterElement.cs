@@ -7,16 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.WebSockets;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WebSocketSharp.Server;
+using WebSocketSharp;
+using Environment = fun.Core.Environment;
 
 namespace lolirift
 {
     public sealed class WebAccepterElement : Element
     {
-        private HttpListener listener;
-        private DataStore data;
-        private InitializationController init;
+        private WebSocketServer wss;
 
         public int Port;
 
@@ -27,73 +31,67 @@ namespace lolirift
 
         public override void Initialize()
         {
-            listener = new HttpListener();
-            listener.Prefixes.Add("http://localhost:844/");
-            listener.Start();
-            listener.BeginGetContext(new AsyncCallback(GetContext), null);
-
-            data = new DataStore()
-            {
-                Environment = Environment
-            };
-
-            init = new InitializationController(data);
+            wss = new WebSocketServer(Port);
+            wss.AddWebSocketService("/", () => new Play(Environment));
+            wss.Start();
         }
 
-        private void GetContext(IAsyncResult res)
+        class Play : WebSocketBehavior
         {
-            var context = listener.EndGetContext(res);
-            listener.BeginGetContext(new AsyncCallback(GetContext), null);
+            private Environment environment;
+            private DataStore data;
+            private Controller[] controllers;
 
-            var request = context.Request;
-            var response = context.Response;
-
-            if (context.Request.HttpMethod == "OPTIONS")
+            public Play(Environment environment)
             {
-                response.StatusCode = 200;
-                response.AddHeader("Access-Control-Allow-Origin", "*");
-                response.AddHeader("Access-Control-Allow-Headers", "Content-Type");
-                response.OutputStream.Close();
+                this.environment = environment;
             }
-            else
+
+            protected override void OnOpen()
             {
-                data.ResponseData = new byte[] { };
-                var requestData = new byte[context.Request.ContentLength64];
-                request.InputStream.Read(requestData, 0, requestData.Length);
-                var requestString = Encoding.UTF8.GetString(requestData);
-
-                var j = JsonConvert.DeserializeObject(requestString) as JObject;
-
-                if (init.IsExecutable(j))
+                data = new DataStore()
                 {
-                    Console.WriteLine("Initializing new member...");
-                    init.Execute(j);
-                    Console.WriteLine("New member initialized!");
-                }
-                else
+                    Environment = environment,
+                    OwnerID = ID,
+                    Send = new Action<string>(Send)
+                }; ;
+
+                controllers = new Controller[]
                 {
-                    var name = request.RawUrl.Split('/')[1];
-                    var loli = Environment.GetEntity(name).GetElement<LoliconElement>();
-                    data.Lolicon = loli;
-                    data.Controllers = loli.Controllers;
-                    foreach (var c in loli.Controllers)
-                        if (c.IsExecutable(j))
+                    new BuildController(data),
+                    new HelloController(data),
+                    new SeeController(data),
+                    new MapController(data)
+                };
+
+                var entity = new Entity(ID, environment);
+                entity.AddElement<LoliconElement>();
+                entity.GetElement<LoliconElement>().Name = ID;
+
+                lock (environment)
+                    environment.AddEntity(entity);
+
+                entity.Initialize();
+            }
+
+            protected override void OnMessage(MessageEventArgs e)
+            {
+                var j = JsonConvert.DeserializeObject<JObject>(e.Data);
+
+                try
+                {
+                    foreach (var controller in controllers)
+                        if (controller.IsExecutable(j))
                         {
-                            Console.WriteLine("Parsing an command...");
-                            c.Execute(j);
-                            Console.WriteLine("Parsing successful!");
+                            Console.WriteLine("A packet was sent refering to the build controller");
+                            Console.WriteLine("Processing...");
+
+                            controller.Execute(j);
+
+                            Console.WriteLine("Processing successful!");
                         }
                 }
-
-                response.StatusCode = 200;
-                response.ContentEncoding = Encoding.UTF8;
-                response.ContentLength64 = data.ResponseData.Length;
-                response.ContentType = "application/json";
-                response.AddHeader("Access-Control-Allow-Origin", "*");
-                response.AddHeader("Access-Control-Allow-Headers", "Content-Type");
-                response.OutputStream.Write(data.ResponseData, 0, data.ResponseData.Length);
-
-                response.OutputStream.Close();
+                catch (Exception exc) { Console.WriteLine("Executing controller went wrong! Failure Message: " + exc.Message); }
             }
         }
     }

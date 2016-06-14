@@ -22,28 +22,28 @@ namespace lolirift.Controllers
 
         public override void Execute(JObject j)
         {
-            var name = j["name"].ToString();
+            //var name = j["name"].ToString();
 
-            if (data.Environment.Entities.Any(e => e.Name == name))
-            {
-                var response = JObject.FromObject(new
-                {
-                    controller = "error",
-                    exists = "true"
-                });
+            //if (data.Environment.Entities.Any(e => e.Name == name))
+            //{
+            //    var response = JObject.FromObject(new
+            //    {
+            //        controller = "error",
+            //        exists = "true"
+            //    });
 
-                data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
-                return;
-            }
+            //    data.ResponseData = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response));
+            //    return;
+            //}
 
-            var entity = new Entity(name, data.Environment);
-            entity.AddElement<LoliconElement>();
-            entity.GetElement<LoliconElement>().Data = data;
+            //var entity = new Entity(name, data.Environment);
+            //entity.AddElement<LoliconElement>();
+            //entity.GetElement<LoliconElement>().Data = data;
 
-            lock (data.Environment)
-                data.Environment.AddEntity(entity);
+            //lock (data.Environment)
+            //    data.Environment.AddEntity(entity);
 
-            entity.Initialize();
+            //entity.Initialize();
         }
     }
 }
