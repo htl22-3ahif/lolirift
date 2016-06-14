@@ -26,7 +26,7 @@ namespace lolirift.Controllers
             response.Add("message", "Hello!");
             var json = JsonConvert.SerializeObject(response);
 
-            data.Send(json);
+            data.Lolicon.Send(json);
         }
     }
 }

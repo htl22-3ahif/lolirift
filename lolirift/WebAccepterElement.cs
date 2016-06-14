@@ -49,11 +49,20 @@ namespace lolirift
 
             protected override void OnOpen()
             {
+                var entity = new Entity(ID, environment);
+                entity.AddElement<LoliconElement>();
+                entity.GetElement<LoliconElement>().Name = ID;
+                entity.GetElement<LoliconElement>().Send = new Action<string>(Send);
+
+                lock (environment)
+                    environment.AddEntity(entity);
+
+                entity.Initialize();
+
                 data = new DataStore()
                 {
                     Environment = environment,
-                    OwnerID = ID,
-                    Send = new Action<string>(Send)
+                    Lolicon = entity.GetElement<LoliconElement>()
                 }; ;
 
                 controllers = new Controller[]
@@ -63,15 +72,6 @@ namespace lolirift
                     new SeeController(data),
                     new MapController(data)
                 };
-
-                var entity = new Entity(ID, environment);
-                entity.AddElement<LoliconElement>();
-                entity.GetElement<LoliconElement>().Name = ID;
-
-                lock (environment)
-                    environment.AddEntity(entity);
-
-                entity.Initialize();
             }
 
             protected override void OnMessage(MessageEventArgs e)

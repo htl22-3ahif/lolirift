@@ -13,8 +13,7 @@ namespace lolirift.Controllers
     internal sealed class DataStore
     {
         public Environment Environment { get; set; }
-        public string OwnerID { get; set; }
-        public Action<string> Send { get; set; }
+        public LoliconElement Lolicon { get; set; }
 
         public DataStore()
         {

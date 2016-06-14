@@ -43,7 +43,7 @@ namespace lolirift.Controllers
             };
 
             var json = JsonConvert.SerializeObject(response);
-            data.Send(json);
+            data.Lolicon.Send(json);
         }
     }
 }

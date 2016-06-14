@@ -19,6 +19,7 @@ namespace lolirift
     {
         public string Name { get; set; }
         public UnitElement[] Units { get; set; }
+        public Action<string> Send { get; set; }
 
         public LoliconElement(Environment environment, Entity entity)
             : base(environment, entity)

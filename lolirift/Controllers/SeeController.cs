@@ -25,7 +25,7 @@ namespace lolirift.Controllers
         {
             var owneds = data.Environment.Entities.Where(e => e.Elements.Any(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
                 .Select(e => e.Elements.First(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
-                .Where(e => (e as UnitElement).OwnerID == data.OwnerID).ToArray();
+                .Where(e => (e as UnitElement).Lolicon == data.Lolicon).ToArray();
 
             var seeable = new List<object>();
 
@@ -42,7 +42,7 @@ namespace lolirift.Controllers
                             information = new
                             {
                                 unit = g.Unit.Name,
-                                owner = g.Unit.OwnerID
+                                owner = g.Unit.Lolicon.Name
                             }
                         });
 
@@ -65,7 +65,7 @@ namespace lolirift.Controllers
                                         information = new
                                         {
                                             unit = g.Unit.Name,
-                                            owner = g.Unit.OwnerID
+                                            owner = g.Unit.Lolicon.Name
                                         }
                                     });
                                 }
@@ -82,7 +82,7 @@ namespace lolirift.Controllers
                 {
                     NullValueHandling = NullValueHandling.Ignore
                 });
-            data.Send(json);
+            data.Lolicon.Send(json);
         }
     }
 }
