@@ -1,5 +1,7 @@
 var ws = new WebSocket("ws://127.0.0.1:844");
 var isMouseDown = false;
+var posX = 0;
+var posY = 0;
 
 var controllers = [
     function(j){
@@ -32,19 +34,25 @@ ws.onopen = function(){
     
     console.log("defining events");
     
-    $( '#grid' ).onmousedown = function(){
+    $( '#grid' ).mousedown(function(e){
         console.log("mousedown");
         isMouseDown = true;
-    };
+        posX = e.pageX;
+        poxY = e.pageY;
+    });
     
-    $( '#grid' ).onmouseup = function(){
+    $( '#grid' ).mouseup(function(){
+        console.log("mouseup");
         isMouseDown = false;
-    };
+    });
     
-    $( '#grid' ).mousemove = function(e){
-        console.log("hello");
-        //console.log(e.pageX + " " + e.pageY);
-    };
+    $( '#grid' ).mousemove(function(e){
+        if (!isMouseDown)
+            return;
+        
+        console.log(e.pageX + " " + e.pageY);
+    });
+    console.log("event made");
 };
 
 ws.onerror = function(error){

@@ -1,3 +1,7 @@
+body{
+  overflow: hidden;
+}
+
 .gridelem{
   border-style: solid;
   float: left;
@@ -7,4 +11,5 @@
 #grid{
   border-style: solid;
   transform: translate(-50%,-50%);
+  transform: scale(2);
 }
