@@ -1,16 +1,68 @@
 body{
   overflow: hidden;
+  font-family: Roboto;
 }
 
-.gridelem{
-  border-style: solid;
+.field{
+  border: 2px solid;
   float: left;
   box-sizing: border-box;
   user-drag: none; 
   user-select: none;
 }
 
+#modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 30%;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.modal-title{
+  text-align: center;
+  font-size: 2rem;
+}
+
+#button{
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  
+  font-size: 2.4rem;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 3.5rem;
+  
+  background-color: #F44336;
+  color: white;
+  border-radius: 5px;
+  
+  height: 3.5rem;
+  width: 15%;
+  
+  box-shadow: 0 3px 10px rgba(0,0,0,0.23),0 3px 10px rgba(0,0,0,0.16);
+  text-decoration: none;
+  
+  z-index: 10;
+}
+
 #grid{
-  border-style: solid;
+  border: 2px solid;
   position: absolute;
 }

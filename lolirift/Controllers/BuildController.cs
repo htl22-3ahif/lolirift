@@ -48,6 +48,8 @@ namespace lolirift.Controllers
             var entity = new Entity(keyword + DateTime.Now.ToString("yyyy-mm-dd:hh:mm:ss:ffff"), data.Environment);
             entity.AddElement(building.GetType());
             (entity.GetElement(building.GetType()) as UnitElement).Lolicon = data.Lolicon;
+            (entity.GetElement(building.GetType()) as UnitElement).PosX = posX;
+            (entity.GetElement(building.GetType()) as UnitElement).PosY = posY;
 
             if (posX + building.Width > grid.Width && posY + building.Height > grid.Height)
                 throw new ArgumentException(string.Format(
@@ -64,12 +66,17 @@ namespace lolirift.Controllers
                     "The given Y({0}) arguments do not fit in the grid with the building's Height({1})",
                     posY, building.Height));
 
+            if (grid.Get(posX, posY).Unit != null)
+                throw new ArgumentException("There is already a unit");
+
             for (int x = posX; x <= posX + building.Width; x++)
                 for (int y = posY; y <= posY + building.Height; y++)
                     grid.Set(entity.GetElement(building.GetType()) as UnitElement, x, y);
 
             lock (data.Environment)
                 data.Environment.AddEntity(entity);
+
+            entity.Initialize();
         }
     }
 }
