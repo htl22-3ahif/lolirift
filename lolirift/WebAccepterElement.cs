@@ -72,6 +72,8 @@ namespace lolirift
                     new SeeController(data),
                     new MapController(data)
                 };
+
+                Console.WriteLine("New client! ID=" + ID);
             }
 
             protected override void OnMessage(MessageEventArgs e)

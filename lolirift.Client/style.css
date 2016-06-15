@@ -1,0 +1,10 @@
+.gridelem{
+  border-style: solid;
+  float: left;
+  box-sizing: border-box;
+}
+
+#grid{
+  border-style: solid;
+  transform: translate(-50%,-50%);
+}
