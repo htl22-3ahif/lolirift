@@ -17,10 +17,13 @@ var modals = {
       <input id="position-y" type="text" class="validate">
       <label for="position-y">Position Y</label>
     </div>
-    <a class="btn waves-effect waves-light" onclick="submit()">Submit
+  </div> 
+  <div class="row">
+    <a class="btn waves-effect waves-light right" onclick="submit()">Submit
       <i class="material-icons right">send</i>
     </a>
-  </div> 
+    <a class="waves-effect waves-teal btn-flat right hoverable" style="margin-right:5%" onclick="cancel()">cancel</a>
+  </div>
   <script>
   function submit(){
       var name = $ ( '#building-name' ).val();
@@ -30,6 +33,9 @@ var modals = {
       console.log(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
       ws.send(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
       
+      cancel();
+  }
+  function cancel(){
       $('#modal').empty();
       $('#modal').css('display', 'none');
   }
