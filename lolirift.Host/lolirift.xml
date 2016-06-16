@@ -7,6 +7,7 @@
     <Element Type="GridElement">
       <Field Name="Width">10</Field>
       <Field Name="Height">10</Field>
+      <Field Name="Heightmap">heightmap.bmp</Field>
     </Element>
   </Entity>
   

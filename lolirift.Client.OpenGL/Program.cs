@@ -10,6 +10,8 @@ namespace lolirift.Client.OpenGL
     {
         static void Main(string[] args)
         {
+            using (var game = new LoliriftGame("ws://127.0.0.1:844", 1280, 720))
+                game.Run();
         }
     }
 }

@@ -42,8 +42,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="websocket-sharp">
+      <HintPath>..\Libs\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\DataStore.cs" />
+    <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Grid.cs" />
+    <Compile Include="GridDrawer.cs" />
+    <Compile Include="LoliriftGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
