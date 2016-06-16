@@ -22,7 +22,7 @@ namespace lolirift
         {
         }
 
-        protected UnitElement[] InRageUnits()
+        public UnitElement[] InRageUnits()
         {
             var grid = Environment.GetEntity("Grid").GetElement<GridElement>();
             var units = new List<UnitElement>();

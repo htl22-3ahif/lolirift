@@ -23,53 +23,29 @@ namespace lolirift.Controllers
 
         public override void Execute(JObject j)
         {
-            var owneds = data.Environment.Entities.Where(e => e.Elements.Any(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
-                .Select(e => e.Elements.First(el => el.GetType().IsSubclassOf(typeof(UnitElement))))
-                .Where(e => (e as UnitElement).Lolicon == data.Lolicon).ToArray();
-
             var seeable = new List<object>();
 
-            for (int x = 0; x < grid.Width; x++)
-                for (int y = 0; y < grid.Height; y++)
-                    if (owneds.Contains(grid.Get(x, y).Unit))
+            foreach (var unit in data.Lolicon.Units)
+            {
+                seeable.Add(new
+                {
+                    x = unit.PosX,
+                    y = unit.PosY,
+                    unit = unit.Name,
+                    owner = unit.Lolicon.Name
+                });
+
+                foreach (var see in unit.InRageUnits())
+                {
+                    seeable.Add(new
                     {
-                        var g = grid.Get(x, y);
-                        var owned = g.Unit;
-                        seeable.Add(new
-                        {
-                            x = x,
-                            y = y,
-                            information = new
-                            {
-                                unit = g.Unit.Name,
-                                owner = g.Unit.Lolicon.Name
-                            }
-                        });
-
-                        for (int offx = -owned.Range; offx < owned.Range; offx++)
-                            for (int offy = -owned.Range; offy < owned.Range; offy++)
-                                if (offx * offx + offy * offy <= owned.Range * owned.Range)
-                                {
-                                    g = grid.Get(offx + x, offy + y);
-
-                                    if (offx == 0 && offy == 0)
-                                        continue;
-
-                                    if (g.Unit == null)
-                                        continue;
-
-                                    seeable.Add(new
-                                    {
-                                        x = offx + x,
-                                        y = offy + y,
-                                        information = new
-                                        {
-                                            unit = g.Unit.Name,
-                                            owner = g.Unit.Lolicon.Name
-                                        }
-                                    });
-                                }
-                    }
+                        x = see.PosX,
+                        y = see.PosY,
+                        unit = see.Name,
+                        owner = see.Lolicon.Name
+                    });
+                }
+            }
 
             var response = new
             {

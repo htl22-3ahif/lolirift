@@ -27,20 +27,23 @@ namespace lolirift.Client
 
             do
             {
-                line = Console.ReadLine();
-                var props = line.Split(' ');
-                var j = new JObject();
-
-                foreach (var prop in props)
+                try
                 {
-                    var key = prop.Split(':')[0];
-                    var value = prop.Split(':')[1];
+                    line = Console.ReadLine();
+                    var props = line.Split(' ');
+                    var j = new JObject();
 
-                    j[key] = value;
+                    foreach (var prop in props)
+                    {
+                        var key = prop.Split(':')[0];
+                        var value = prop.Split(':')[1];
+
+                        j[key] = value;
+                    }
+
+                    ws.Send(JsonConvert.SerializeObject(j));
                 }
-
-                ws.Send(JsonConvert.SerializeObject(j));
-
+                catch (Exception) { Console.WriteLine("Invalid Input!"); Console.WriteLine(); }
             } while (line != string.Empty);
         }
     }

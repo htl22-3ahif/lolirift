@@ -77,6 +77,7 @@ namespace lolirift.Controllers
                 data.Environment.AddEntity(entity);
 
             entity.Initialize();
+            data.Lolicon.Units.Add(entity.GetElement(building.GetType()) as UnitElement);
         }
     }
 }
