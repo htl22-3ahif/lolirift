@@ -24,8 +24,8 @@ var modals = {
   <script>
   function submit(){
       var name = $ ( '#building-name' ).val();
-      var x = $ ( '#position-x' ).val();
-      var y = $ ( '#position-y' ).val();
+      var x = $ ( '#position-x' ).val().trim();
+      var y = $ ( '#position-y' ).val().trim();
       
       console.log(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
       ws.send(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
