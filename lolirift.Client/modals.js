@@ -29,6 +29,9 @@ var modals = {
       
       console.log(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
       ws.send(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
+      
+      $('#modal').empty();
+      $('#modal').css('display', 'none');
   }
   </script>
 </div>

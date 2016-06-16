@@ -10,7 +10,6 @@ ws.onopen = function(){
   ws.send( '{ "controller": "map" }' );
   
   $('#modal').click(function(e){
-    console.log(e.target);
     if (e.target.id != 'modal')
       return;
     
