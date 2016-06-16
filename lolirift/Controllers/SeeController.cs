@@ -35,7 +35,7 @@ namespace lolirift.Controllers
                     owner = unit.Lolicon.Name
                 });
 
-                foreach (var see in unit.InRageUnits())
+                foreach (var see in unit.InRangeUnits())
                 {
                     seeable.Add(new
                     {

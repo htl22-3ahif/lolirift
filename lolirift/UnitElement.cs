@@ -1,8 +1,10 @@
 ﻿using fun.Core;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace lolirift
@@ -17,12 +19,59 @@ namespace lolirift
         public abstract int Range { get; }
         public abstract string Name { get; }
 
-        public UnitElement(fun.Core.Environment environment, Entity entity) 
+        public UnitElement(fun.Core.Environment environment, Entity entity)
             : base(environment, entity)
         {
         }
 
-        public UnitElement[] InRageUnits()
+        public override void Initialize()
+        {
+            new Thread(new ThreadStart(() => { while (true) SendInfo(); }))
+            {
+                Priority = ThreadPriority.BelowNormal,
+                IsBackground = true,
+            }.Start();
+        }
+
+        public void SendInfo()
+        {
+            try
+            {
+                Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+
+                var units = InRangeUnits();
+                if (units == null)
+                    return;
+
+                var seeable = new List<object>();
+
+                foreach (var unit in units)
+                {
+                    seeable.Add(new
+                    {
+                        x = unit.PosX,
+                        y = unit.PosY,
+                        owner = unit.Lolicon.Name,
+                        unit = unit.Name
+                    });
+                }
+
+                var json = JsonConvert.SerializeObject(new
+                {
+                    controller = "see",
+                    seeable = seeable.ToArray()
+                });
+
+                Lolicon.Send(json);
+            }
+            finally
+            {
+                // Restore the thread default priority.
+                Thread.CurrentThread.Priority = ThreadPriority.Normal;
+            }
+        }
+
+        public UnitElement[] InRangeUnits()
         {
             var grid = Environment.GetEntity("Grid").GetElement<GridElement>();
             var units = new List<UnitElement>();

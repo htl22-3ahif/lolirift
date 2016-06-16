@@ -30,8 +30,7 @@ var controllers = [
         console.log("see controller aktive");
         
         j["seeable"].forEach(function(s){
-            var info = s["information"];
-            $ ( '.field[pos="'+s['x']+'/'+s['y']+'"]' ).html(info["unit"]+" by "+info["owner"]);
+            $ ( '.field[pos="'+s['x']+'/'+s['y']+'"]' ).html(s["unit"]+" by "+s["owner"]);
         });
     }
 ];

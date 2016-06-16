@@ -22,22 +22,32 @@ namespace lolirift
 
         public override void Initialize()
         {
+            var seeable = new List<object>();
+
+            seeable.Add(new
+            {
+                x = PosX,
+                y = PosY,
+                unit = Name,
+                owner = Lolicon.Name
+
+            });
+
+            foreach (var unit in this.InRangeUnits())
+            {
+                seeable.Add(new
+                {
+                    x = unit.PosX,
+                    y = unit.PosY,
+                    unit = unit.Name,
+                    owner = unit.Lolicon.Name
+                });
+            }
+
             var json = JsonConvert.SerializeObject(new
             {
                 controller = "see",
-                seeable = new[]
-                {
-                    new
-                    {
-                        x = PosX,
-                        y = PosY,
-                        information = new
-                        {
-                            unit = Name,
-                            owner = Lolicon.Name
-                        }
-                    }
-                }
+                seeable = seeable.ToArray()
             });
 
             Lolicon.Send(json);
