@@ -22,6 +22,8 @@ namespace lolirift
 
         public override void Initialize()
         {
+            base.Initialize();
+
             var seeable = new List<object>();
 
             seeable.Add(new

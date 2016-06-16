@@ -11,6 +11,8 @@ namespace lolirift
 {
     public abstract class UnitElement : Element
     {
+        UnitElement[] lastUnits;
+
         public LoliconElement Lolicon;
 
         public int PosX { get; set; }
@@ -26,6 +28,8 @@ namespace lolirift
 
         public override void Initialize()
         {
+            lastUnits = new UnitElement[0];
+
             new Thread(new ThreadStart(() => { while (true) SendInfo(); }))
             {
                 Priority = ThreadPriority.BelowNormal,
@@ -33,42 +37,38 @@ namespace lolirift
             }.Start();
         }
 
-        public void SendInfo()
+        private void SendInfo()
         {
-            try
+            var units = InRangeUnits();
+
+            if (units.Length == 0)
+                return;
+
+            if (Enumerable.SequenceEqual(units, lastUnits))
+                return;
+
+            var seeable = new List<object>();
+
+            foreach (var unit in units)
             {
-                Thread.CurrentThread.Priority = ThreadPriority.Lowest;
-
-                var units = InRangeUnits();
-                if (units == null)
-                    return;
-
-                var seeable = new List<object>();
-
-                foreach (var unit in units)
+                seeable.Add(new
                 {
-                    seeable.Add(new
-                    {
-                        x = unit.PosX,
-                        y = unit.PosY,
-                        owner = unit.Lolicon.Name,
-                        unit = unit.Name
-                    });
-                }
-
-                var json = JsonConvert.SerializeObject(new
-                {
-                    controller = "see",
-                    seeable = seeable.ToArray()
+                    x = unit.PosX,
+                    y = unit.PosY,
+                    owner = unit.Lolicon.Name,
+                    unit = unit.Name
                 });
+            }
 
-                Lolicon.Send(json);
-            }
-            finally
+            var json = JsonConvert.SerializeObject(new
             {
-                // Restore the thread default priority.
-                Thread.CurrentThread.Priority = ThreadPriority.Normal;
-            }
+                controller = "see",
+                seeable = seeable.ToArray()
+            });
+
+            Lolicon.Send(json);
+
+            lastUnits = units;
         }
 
         public UnitElement[] InRangeUnits()
