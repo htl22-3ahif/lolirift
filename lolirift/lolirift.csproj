@@ -53,6 +53,7 @@
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\InitializationController.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\NameController.cs" />
     <Compile Include="Controllers\SeeController.cs" />
     <Compile Include="GridElement.cs" />
     <Compile Include="LoliconElement.cs" />

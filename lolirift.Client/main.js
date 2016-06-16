@@ -7,6 +7,10 @@ var gridY = 0;
 var scale = 1;
 
 ws.onopen = function(){
+    
+    $('#modal').append(modals['name']);
+    $('#modal').css('display', 'block');
+    
   ws.send( '{ "controller": "map" }' );
   
   $('#modal').click(function(e){
@@ -31,15 +35,15 @@ ws.onopen = function(){
       if (!isMouseDown)
           return;
       
-  gridX += (posX - e.pageX) * (1/scale);
-  gridY += (posY - e.pageY) * (1/scale);
-      posX = e.pageX;
-      posY = e.pageY;
-  $('#grid').css({
-          'right': gridX,
-          'bottom': gridY
-  });
-  });
+        gridX += (posX - e.pageX) * (1/scale);
+        gridY += (posY - e.pageY) * (1/scale);
+        posX = e.pageX;
+        posY = e.pageY;
+        $('#grid').css({
+            'right': gridX,
+            'bottom': gridY
+        });
+    });
   
   $( 'html' ).bind('mousewheel', function(e){
       if(e.originalEvent.wheelDelta / 120 > 0) {

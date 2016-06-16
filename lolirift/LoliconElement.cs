@@ -18,6 +18,7 @@ namespace lolirift
     public sealed class LoliconElement : Element
     {
         public string Name { get; set; }
+        public string ID { get; set; }
         public UnitElement[] Units { get; set; }
         public Action<string> Send { get; set; }
 

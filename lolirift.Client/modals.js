@@ -30,9 +30,35 @@ var modals = {
       var x = $ ( '#position-x' ).val().trim();
       var y = $ ( '#position-y' ).val().trim();
       
-      console.log(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
       ws.send(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
-      
+      cancel();
+  }
+  function cancel(){
+      $('#modal').empty();
+      $('#modal').css('display', 'none');
+  }
+  </script>
+</div>
+`
+    ,'name': `
+<div class="modal-content">
+  <div class="modal-title">Name</div>
+  <div class="row">
+    <div class="input-field col s12">
+      <input id="name" type="text" class="validate">
+      <label for="name">Your name</label>
+    </div>
+  </div>
+  <div class="row">
+    <a class="btn waves-effect waves-light right" onclick="submit()">Submit
+      <i class="material-icons right">send</i>
+    </a>
+    <a class="waves-effect waves-teal btn-flat right hoverable" style="margin-right:5%" onclick="cancel()">cancel</a>
+  </div>
+  <script>
+  function submit(){
+      var name = $ ( '#name' ).val();
+      ws.send(JSON.stringify({"controller":"name","name": name}));
       cancel();
   }
   function cancel(){

@@ -5,8 +5,8 @@
   
   <Entity Name="Grid">
     <Element Type="GridElement">
-      <Field Name="Width">10</Field>
-      <Field Name="Height">10</Field>
+      <Field Name="Width">100</Field>
+      <Field Name="Height">100</Field>
     </Element>
   </Entity>
   

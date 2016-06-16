@@ -51,6 +51,7 @@ namespace lolirift
             {
                 var entity = new Entity(ID, environment);
                 entity.AddElement<LoliconElement>();
+                entity.GetElement<LoliconElement>().ID = ID;
                 entity.GetElement<LoliconElement>().Name = ID;
                 entity.GetElement<LoliconElement>().Send = new Action<string>(Send);
 
@@ -70,7 +71,8 @@ namespace lolirift
                     new BuildController(data),
                     new HelloController(data),
                     new SeeController(data),
-                    new MapController(data)
+                    new MapController(data),
+                    new NameController(data)
                 };
 
                 Console.WriteLine("New client! ID=" + ID);
