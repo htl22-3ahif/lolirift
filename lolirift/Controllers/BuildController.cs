@@ -17,7 +17,7 @@ namespace lolirift.Controllers
         private GridElement grid;
 
         public override string Keyword { get { return "build"; } }
-        public override string[] NeededKeys { get { return new[] { "name", "x", "y" }; } }
+        public override string[] NeededKeys { get { return new[] { "building", "x", "y" }; } }
 
         public BuildController(DataStore data)
             : base(data)
@@ -38,14 +38,15 @@ namespace lolirift.Controllers
 
         public override void Execute(JObject j)
         {
-            var keyword = j["name"].ToString();
+            var keyword = j["building"].ToString();
             var pos = new Point(
                 int.Parse(j["x"].ToString()),
                 int.Parse(j["y"].ToString()));
             BuildableElement building;
 
             try { building = buildables.First(b => b.Name == keyword); }
-            catch (Exception) { throw new ArgumentException(string.Format("Building with Keyword \"{0}\" does not work", keyword)); }
+            catch (Exception) { throw new ArgumentException(string.Format(
+                "Building with Keyword \"{0}\" does not work", keyword)); }
 
             if (pos.X < 0 || pos.Y < 0 || pos.X >= grid.Width || pos.Y >= grid.Height)
                 throw new ArgumentException();
@@ -55,7 +56,7 @@ namespace lolirift.Controllers
                     if (p.X < 0 || p.Y < 0 || p.X >= grid.Width || p.Y >= grid.Height)
                         throw new ArgumentException();
 
-            if (grid.Get(pos.X, pos.Y).Unit != null)
+            if (grid.Get(pos).Unit != null)
                 throw new ArgumentException("There is already a unit");
 
             var entity = new Entity(keyword + DateTime.Now.ToString("yyyy-mm-dd:hh:mm:ss:ffff"), data.Environment);
@@ -63,10 +64,10 @@ namespace lolirift.Controllers
             (entity.GetElement(building.GetType()) as UnitElement).Lolicon = data.Lolicon;
             (entity.GetElement(building.GetType()) as UnitElement).Position = pos;
 
-            grid.Set(entity.GetElement(building.GetType()) as UnitElement, pos.X, pos.Y);
+            grid.Set(entity.GetElement(building.GetType()) as UnitElement, pos);
             if (building.Spread != null)
                 foreach (var p in building.Spread)
-                    grid.Set(entity.GetElement(building.GetType()) as UnitElement, p.X, p.Y);
+                    grid.Set(entity.GetElement(building.GetType()) as UnitElement, p);
 
             lock (data.Environment)
                 data.Environment.AddEntity(entity);

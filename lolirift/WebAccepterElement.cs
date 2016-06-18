@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using WebSocketSharp.Server;
 using WebSocketSharp;
 using Environment = fun.Core.Environment;
+using System.Threading;
 
 namespace lolirift
 {
@@ -82,20 +83,27 @@ namespace lolirift
             {
                 var j = JsonConvert.DeserializeObject<JObject>(e.Data);
 
-                try
+                new Thread(() =>
                 {
-                    foreach (var controller in controllers)
-                        if (controller.IsExecutable(j))
-                        {
-                            Console.WriteLine("A packet was sent refering to the build controller");
-                            Console.WriteLine("Processing...");
+                    try
+                    {
+                        foreach (var controller in controllers)
+                            if (controller.IsExecutable(j))
+                            {
+                                Console.WriteLine("A packet was sent refering to the build controller");
+                                Console.WriteLine("Processing...");
 
-                            controller.Execute(j);
+                                controller.Execute(j);
 
-                            Console.WriteLine("Processing successful!");
-                        }
-                }
-                catch (Exception exc) { Console.WriteLine("Executing controller went wrong! Failure Message: " + exc.Message); }
+                                Console.WriteLine("Processing successful!");
+                            }
+                    }
+                    catch (Exception exc) { Console.WriteLine("Executing controller went wrong! Failure Message: " + exc.Message); }
+                })
+                {
+                    IsBackground = true,
+                    Priority = ThreadPriority.BelowNormal
+                }.Start();
             }
         }
     }

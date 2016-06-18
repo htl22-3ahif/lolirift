@@ -20,6 +20,7 @@ namespace lolirift
 
         public abstract int Range { get; }
         public abstract string Name { get; }
+        public abstract Point[] Spread { get; }
 
         public UnitElement(fun.Core.Environment environment, Entity entity)
             : base(environment, entity)
@@ -89,7 +90,7 @@ namespace lolirift
                         if (x < 0 || y < 0 || x >= grid.Width || y >= grid.Height)
                             continue;
 
-                        var g = grid.Get(x, y);
+                        var g = grid.Get(new Point(x, y));
 
                         if (g.Unit == null)
                             continue;

@@ -12,12 +12,15 @@ namespace lolirift
 {
     public abstract class BuildableElement : UnitElement
     {
-        public abstract Type Loli { get; }
-        public abstract Point[] Spread { get; }
+        public abstract Type[]Lolis { get; }
+        public abstract int Duration { get; }
+
+        public bool IsTraining { get; set; }
 
         public BuildableElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
+            IsTraining = false;
         }
 
         public override void Initialize()

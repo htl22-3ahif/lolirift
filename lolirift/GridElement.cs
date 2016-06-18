@@ -42,14 +42,14 @@ namespace lolirift
             }
         }
 
-        public void Set(UnitElement unit, int x, int y)
+        public void Set(UnitElement unit, Point p)
         {
-            Grid[x + Width * y].Unit = unit;
+            Grid[p.X + Width * p.Y].Unit = unit;
         }
 
-        public GridField Get(int x, int y)
+        public GridField Get(Point p)
         {
-            return Grid[x + Width * y];
+            return Grid[p.X + Width * p.Y];
         }
     }
 

@@ -13,8 +13,9 @@ namespace lolirift
     {
         public override string Name { get { return "test"; } }
         public override int Range { get { return 5; } }
-        public override Type Loli { get { return typeof(TestLoliElement); } }
+        public override Type[] Lolis { get { return new[] { typeof(TestLoliElement) }; } }
         public override Point[] Spread { get { return null; } }
+        public override int Duration { get { return 5; } }
 
         public TestBuildingElement(Environment environment, Entity entity)
             : base(environment, entity)
