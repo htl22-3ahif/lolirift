@@ -12,7 +12,7 @@ namespace lolirift
     {
         public override int Range { get { return 5; } }
         public override int Speed { get { return 1; } }
-        public override string Name { get { return "loli-test"; } }
+        public override string Name { get { return "test-loli"; } }
         public override Point[] Spread { get { return null; } }
 
         public TestLoliElement(fun.Core.Environment environment, Entity entity)

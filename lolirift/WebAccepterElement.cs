@@ -73,7 +73,8 @@ namespace lolirift
                     new HelloController(data),
                     new SeeController(data),
                     new MapController(data),
-                    new NameController(data)
+                    new NameController(data),
+                    new TrainController(data)
                 };
 
                 Console.WriteLine("New client! ID=" + ID);
@@ -90,7 +91,7 @@ namespace lolirift
                         foreach (var controller in controllers)
                             if (controller.IsExecutable(j))
                             {
-                                Console.WriteLine("A packet was sent refering to the build controller");
+                                Console.WriteLine("Controller: {0}", controller.Keyword);
                                 Console.WriteLine("Processing...");
 
                                 controller.Execute(j);
