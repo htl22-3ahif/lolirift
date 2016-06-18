@@ -31,6 +31,25 @@ namespace lolirift
         {
             lastUnits = new UnitElement[0];
 
+            var seeable = new List<object>();
+
+            seeable.Add(new
+            {
+                x = Position.X,
+                y = Position.Y,
+                unit = Name,
+                owner = Lolicon.Name
+
+            });
+
+            var json = JsonConvert.SerializeObject(new
+            {
+                controller = "see",
+                seeable = seeable.ToArray()
+            });
+
+            Lolicon.Send(json);
+
             new Thread(new ThreadStart(() => { while (true) SendInfo(); }))
             {
                 Priority = ThreadPriority.BelowNormal,

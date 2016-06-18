@@ -22,40 +22,5 @@ namespace lolirift
         {
             IsTraining = false;
         }
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            var seeable = new List<object>();
-
-            seeable.Add(new
-            {
-                x = Position.X,
-                y = Position.Y,
-                unit = Name,
-                owner = Lolicon.Name
-
-            });
-
-            foreach (var unit in this.InRangeUnits())
-            {
-                seeable.Add(new
-                {
-                    x = unit.Position.X,
-                    y = unit.Position.Y,
-                    unit = unit.Name,
-                    owner = unit.Lolicon.Name
-                });
-            }
-
-            var json = JsonConvert.SerializeObject(new
-            {
-                controller = "see",
-                seeable = seeable.ToArray()
-            });
-
-            Lolicon.Send(json);
-        }
     }
 }
