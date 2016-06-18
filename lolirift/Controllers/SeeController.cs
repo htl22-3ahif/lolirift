@@ -29,8 +29,8 @@ namespace lolirift.Controllers
             {
                 seeable.Add(new
                 {
-                    x = unit.PosX,
-                    y = unit.PosY,
+                    x = unit.Position.X,
+                    y = unit.Position.Y,
                     unit = unit.Name,
                     owner = unit.Lolicon.Name
                 });
@@ -39,8 +39,8 @@ namespace lolirift.Controllers
                 {
                     seeable.Add(new
                     {
-                        x = see.PosX,
-                        y = see.PosY,
+                        x = see.Position.X,
+                        y = see.Position.Y,
                         unit = see.Name,
                         owner = see.Lolicon.Name
                     });

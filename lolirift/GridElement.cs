@@ -13,11 +13,11 @@ namespace lolirift
 {
     public sealed class GridElement : Element
     {
-        private GridField[] grid;
-
         public int Height;
         public int Width;
         public string Heightmap;
+
+        public GridField[] Grid { get; private set; }
 
         public GridElement(Environment environment, Entity entity) 
             : base(environment, entity)
@@ -26,7 +26,7 @@ namespace lolirift
 
         public override void Initialize()
         {
-            grid = new GridField[Height * Width];
+            Grid = new GridField[Height * Width];
 
             var hm = new Bitmap(Heightmap);
             var data = hm.LockBits(new Rectangle(0, 0, hm.Width, hm.Height), 
@@ -36,20 +36,20 @@ namespace lolirift
             Marshal.Copy(data.Scan0, pixels, 0, length);
             hm.UnlockBits(data);
 
-            for (int i = 0; i < grid.Length; i++)
+            for (int i = 0; i < Grid.Length; i++)
             {
-                grid[i].Height = pixels[i];
+                Grid[i].Height = pixels[i];
             }
         }
 
         public void Set(UnitElement unit, int x, int y)
         {
-            grid[x + Width * y].Unit = unit;
+            Grid[x + Width * y].Unit = unit;
         }
 
         public GridField Get(int x, int y)
         {
-            return grid[x + Width * y];
+            return Grid[x + Width * y];
         }
     }
 

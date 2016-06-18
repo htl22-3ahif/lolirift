@@ -7,6 +7,7 @@ using fun.Core;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Newtonsoft.Json.Linq;
+using System.Drawing;
 
 namespace lolirift.Controllers
 {
@@ -38,40 +39,34 @@ namespace lolirift.Controllers
         public override void Execute(JObject j)
         {
             var keyword = j["name"].ToString();
-            var posX = int.Parse(j["x"].ToString());
-            var posY = int.Parse(j["y"].ToString());
+            var pos = new Point(
+                int.Parse(j["x"].ToString()),
+                int.Parse(j["y"].ToString()));
             BuildableElement building;
 
             try { building = buildables.First(b => b.Name == keyword); }
             catch (Exception) { throw new ArgumentException(string.Format("Building with Keyword \"{0}\" does not work", keyword)); }
 
+            if (pos.X < 0 || pos.Y < 0 || pos.X >= grid.Width || pos.Y >= grid.Height)
+                throw new ArgumentException();
+
+            if (building.Spread != null)
+                foreach (var p in building.Spread)
+                    if (p.X < 0 || p.Y < 0 || p.X >= grid.Width || p.Y >= grid.Height)
+                        throw new ArgumentException();
+
+            if (grid.Get(pos.X, pos.Y).Unit != null)
+                throw new ArgumentException("There is already a unit");
+
             var entity = new Entity(keyword + DateTime.Now.ToString("yyyy-mm-dd:hh:mm:ss:ffff"), data.Environment);
             entity.AddElement(building.GetType());
             (entity.GetElement(building.GetType()) as UnitElement).Lolicon = data.Lolicon;
-            (entity.GetElement(building.GetType()) as UnitElement).PosX = posX;
-            (entity.GetElement(building.GetType()) as UnitElement).PosY = posY;
+            (entity.GetElement(building.GetType()) as UnitElement).Position = pos;
 
-            if (posX + building.Width > grid.Width && posY + building.Height > grid.Height)
-                throw new ArgumentException(string.Format(
-                    "The given X({0}) and Y({1}) arguments do not fit in the grid with the building's Width({2}) and Height({3})",
-                    posX, posY, building.Width, building.Height));
-
-            if (posX + building.Width > grid.Width)
-                throw new ArgumentException(string.Format(
-                    "The given X({0}) arguments do not fit in the grid with the building's Width({1})",
-                    posX, building.Width));
-
-            if (posY + building.Height > grid.Height)
-                throw new ArgumentException(string.Format(
-                    "The given Y({0}) arguments do not fit in the grid with the building's Height({1})",
-                    posY, building.Height));
-
-            if (grid.Get(posX, posY).Unit != null)
-                throw new ArgumentException("There is already a unit");
-
-            for (int x = posX; x <= posX + building.Width; x++)
-                for (int y = posY; y <= posY + building.Height; y++)
-                    grid.Set(entity.GetElement(building.GetType()) as UnitElement, x, y);
+            grid.Set(entity.GetElement(building.GetType()) as UnitElement, pos.X, pos.Y);
+            if (building.Spread != null)
+                foreach (var p in building.Spread)
+                    grid.Set(entity.GetElement(building.GetType()) as UnitElement, p.X, p.Y);
 
             lock (data.Environment)
                 data.Environment.AddEntity(entity);

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -15,8 +16,7 @@ namespace lolirift
 
         public LoliconElement Lolicon;
 
-        public int PosX { get; set; }
-        public int PosY { get; set; }
+        public Point Position { get; set; }
 
         public abstract int Range { get; }
         public abstract string Name { get; }
@@ -53,8 +53,8 @@ namespace lolirift
             {
                 seeable.Add(new
                 {
-                    x = unit.PosX,
-                    y = unit.PosY,
+                    x = unit.Position.X,
+                    y = unit.Position.Y,
                     owner = unit.Lolicon.Name,
                     unit = unit.Name
                 });
@@ -83,8 +83,8 @@ namespace lolirift
                         if (offx == 0 && offy == 0)
                             continue;
 
-                        var x = offx + PosX;
-                        var y = offy + PosY;
+                        var x = offx + Position.X;
+                        var y = offy + Position.Y;
 
                         if (x < 0 || y < 0 || x >= grid.Width || y >= grid.Height)
                             continue;

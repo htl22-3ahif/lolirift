@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +12,8 @@ namespace lolirift
 {
     public abstract class BuildableElement : UnitElement
     {
-        public abstract int Width { get; }
-        public abstract int Height { get; }
         public abstract Type Loli { get; }
+        public abstract Point[] Spread { get; }
 
         public BuildableElement(Environment environment, Entity entity)
             : base(environment, entity)
@@ -28,8 +28,8 @@ namespace lolirift
 
             seeable.Add(new
             {
-                x = PosX,
-                y = PosY,
+                x = Position.X,
+                y = Position.Y,
                 unit = Name,
                 owner = Lolicon.Name
 
@@ -39,8 +39,8 @@ namespace lolirift
             {
                 seeable.Add(new
                 {
-                    x = unit.PosX,
-                    y = unit.PosY,
+                    x = unit.Position.X,
+                    y = unit.Position.Y,
                     unit = unit.Name,
                     owner = unit.Lolicon.Name
                 });
