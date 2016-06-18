@@ -59,29 +59,29 @@ namespace lolirift.Client.OpenGL
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            if (data.Grid == null)
-                return;
+            //if (data.Grid == null)
+            //    return;
 
-            var delta = new Vector3();
+            //var delta = new Vector3();
 
-            curr = OpenTK.Input.Mouse.GetState();
-            if (curr != prev)
-                delta = new Vector3(
-                    (prev.X - curr.X),
-                    (prev.Y - curr.Y),
-                    prev.Wheel - curr.Wheel);
-            else
-                delta = Vector3.Zero;
+            //curr = OpenTK.Input.Mouse.GetState();
+            //if (curr != prev)
+            //    delta = new Vector3(
+            //        (prev.X - curr.X),
+            //        (prev.Y - curr.Y),
+            //        prev.Wheel - curr.Wheel);
+            //else
+            //    delta = Vector3.Zero;
 
-            prev = curr;
+            //prev = curr;
 
-            if (curr.IsButtonDown(MouseButton.Left))
-                data.Grid.Position += new Vector2(-delta.X, delta.Y);
+            //if (curr.IsButtonDown(MouseButton.Left))
+            //    data.Grid.Position += new Vector2(-delta.X, delta.Y);
 
-            if (delta.Z < 0)
-                data.Grid.Scale += 0.1f * data.Grid.Scale;
-            else if (delta.Z > 0)
-                data.Grid.Scale -= 0.1f * data.Grid.Scale;
+            //if (delta.Z < 0)
+            //    data.Grid.Scale += 0.1f * data.Grid.Scale;
+            //else if (delta.Z > 0)
+            //    data.Grid.Scale -= 0.1f * data.Grid.Scale;
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)

@@ -1,14 +1,15 @@
 body{
-  overflow: hidden;
+  #overflow: hidden;
   font-family: Roboto;
 }
 
 .field{
-  border: 2px solid;
+  white-space: pre;
   float: left;
+  width: 200px;
+  height: 200px;
+  padding: 7px !important;
   box-sizing: border-box;
-  user-drag: none; 
-  user-select: none;
 }
 
 #modal {
@@ -63,6 +64,4 @@ body{
 }
 
 #grid{
-  border: 2px solid;
-  position: absolute;
 }

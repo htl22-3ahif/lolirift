@@ -7,20 +7,18 @@ var controllers = [
         
         var width = parseInt( j["width"] );
         var height = parseInt( j["height"] );
+        var heightmap = j["heightmap"];
+        var elem = 0;
         
         for (i = 0; i < width * height; i++){
-            var elem = $( '<div class="field"></div>' );
-            elem.css({
-                'width': (1/width)*100+'%',
-                'height': (1/height)*100+'%'
-            });
+            elem = $( '<div class="field"><div class="card hoverable" style="height: 100%;"></div></div>' );
             elem.attr('pos', i%width+'/'+Math.floor(i/width));
             $('#grid').append(elem);
         }
         
-        $('#grid').css({
-            'width': width * 100+'px',
-            'height': height * 100+'px'
+        $( '#grid' ).css({
+          'width': $('.field').outerWidth()*width+'px',
+          'height': $('.field').outerHeight()*height+'px'
         });
     }
     ,function(j){
@@ -30,7 +28,7 @@ var controllers = [
         console.log("see controller aktive");
         
         j["seeable"].forEach(function(s){
-            $ ( '.field[pos="'+s['x']+'/'+s['y']+'"]' ).html(s["unit"]+" by "+s["owner"]);
+            $ ( '#grid .field[pos="'+s['x']+'/'+s['y']+'"] .card' ).html(s["unit"]+" by "+s["owner"]);
         });
     }
 ];

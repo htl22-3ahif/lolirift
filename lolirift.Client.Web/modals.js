@@ -30,7 +30,7 @@ var modals = {
       var x = $ ( '#position-x' ).val().trim();
       var y = $ ( '#position-y' ).val().trim();
       
-      ws.send(JSON.stringify({"controller":"build","name": name,"x":x,"y":y}));
+      ws.send(JSON.stringify({"controller":"build","building": name,"x":x,"y":y}));
       cancel();
   }
   function cancel(){
