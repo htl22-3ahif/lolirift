@@ -71,8 +71,8 @@ namespace lolirift.Controllers
                 var old = loli.Position;
 
                 loli.Position = new Point(
-                    from.X + (int)Math.Floor(x),
-                    from.Y + (int)Math.Floor(y));
+                    from.X + (x > 0 ? (int)Math.Floor(x) : (int)Math.Ceiling(x)),
+                    from.Y + (y > 0 ? (int)Math.Floor(y) : (int)Math.Ceiling(y)));
 
                 if (old != loli.Position)
                     lock (grid)
