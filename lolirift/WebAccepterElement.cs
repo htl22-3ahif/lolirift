@@ -92,7 +92,8 @@ namespace lolirift
                     new SeeController(data),
                     new MapController(data),
                     new NameController(data),
-                    new TrainController(data)
+                    new TrainController(data),
+                    new MoveController(data)
                 };
 
                 Console.WriteLine("New client! ID=" + ID);

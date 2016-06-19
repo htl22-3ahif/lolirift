@@ -53,6 +53,7 @@
     <Compile Include="Controllers\DataStore.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\MoveController.cs" />
     <Compile Include="Controllers\NameController.cs" />
     <Compile Include="Controllers\TrainController.cs" />
     <Compile Include="Controllers\SeeController.cs" />

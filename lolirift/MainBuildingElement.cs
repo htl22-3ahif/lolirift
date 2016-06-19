@@ -15,7 +15,7 @@ namespace lolirift
         {
         }
 
-        public override int Duration
+        public override int TrainDuration
         {
             get
             {

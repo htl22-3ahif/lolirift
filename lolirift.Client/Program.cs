@@ -19,7 +19,14 @@ namespace lolirift.Client
 
             ws.OnMessage += (sender, e) =>
             {
-                Console.WriteLine("Server says: " + e.Data);
+                var j = JsonConvert.DeserializeObject<JObject>(e.Data);
+
+                Console.WriteLine("Server says: ");
+                foreach (var prop in j.Properties())
+                {
+                    Console.WriteLine("  " + prop.Name + ":" + prop.Value.ToString());
+                }
+
                 Console.WriteLine();
             };
 

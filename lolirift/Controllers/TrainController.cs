@@ -54,7 +54,7 @@ namespace lolirift.Controllers
 
             lock (building)
                 building.IsTraining = true;
-            Thread.Sleep(building.Duration * 1000);
+            Thread.Sleep(building.TrainDuration * 1000);
             lock (building)
                 building.IsTraining = false;
 
