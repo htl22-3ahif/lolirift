@@ -16,5 +16,9 @@
       <Field Name="Port">844</Field>
     </Element>
   </Entity>
+
+  <Entity Name="Buildings" Enable="false">
+    <Element Type="TestBuildingElement" />
+  </Entity>
   
 </Environment>

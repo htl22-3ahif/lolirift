@@ -18,14 +18,20 @@ namespace lolirift
     public sealed class LoliconElement : Element
     {
         public string Name { get; set; }
-        public string ID { get; set; }
-        public List<UnitElement> Units { get; private set; }
         public Action<string> Send { get; set; }
 
         public LoliconElement(Environment environment, Entity entity)
             : base(environment, entity)
         {
-            Units = new List<UnitElement>();
+        }
+
+        public UnitElement[] GetUnits()
+        {
+            return Environment.Entities
+                .Where(e => e.Name.StartsWith(Entity.Name))
+                .Where(e => e.Elements.Any(el => el is UnitElement))
+                .Select(e => e.Elements.First(el => el is UnitElement) as UnitElement)
+                .ToArray();
         }
     }
 }

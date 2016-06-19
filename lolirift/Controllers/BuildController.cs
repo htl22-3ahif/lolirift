@@ -15,6 +15,7 @@ namespace lolirift.Controllers
     {
         private BuildableElement[] buildables;
         private GridElement grid;
+        private int count;
 
         public override string Keyword { get { return "build"; } }
         public override string[] NeededKeys { get { return new[] { "building", "x", "y" }; } }
@@ -22,18 +23,13 @@ namespace lolirift.Controllers
         public BuildController(DataStore data)
             : base(data)
         {
+            count = 0;
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();
 
-            var allTypes = Assembly.GetExecutingAssembly().ExportedTypes;
-
-            var types = Assembly.GetExecutingAssembly().ExportedTypes
-                .Where(t => t.IsSubclassOf(typeof(BuildableElement)))
+            buildables = data.Environment.GetEntity("Buildings").Elements
+                .Where(e => e.GetType().IsSubclassOf(typeof(BuildableElement)))
+                .Select(e => e as BuildableElement)
                 .ToArray();
-
-            buildables = new BuildableElement[types.Length];
-
-            for (int i = 0; i < types.Length; i++)
-                buildables[i] = FormatterServices.GetUninitializedObject(types[i]) as BuildableElement;
         }
 
         public override void Execute(JObject j)
@@ -44,7 +40,7 @@ namespace lolirift.Controllers
                 int.Parse(j["y"].ToString()));
             BuildableElement building;
 
-            try { building = buildables.First(b => b.Name == keyword); }
+            try { building = buildables.First(b => b.Keyword == keyword); }
             catch (Exception) { throw new ArgumentException(string.Format(
                 "Building with Keyword \"{0}\" does not work", keyword)); }
 
@@ -59,10 +55,12 @@ namespace lolirift.Controllers
             if (grid.Get(pos).Unit != null)
                 throw new ArgumentException("There is already a unit");
 
-            var entity = new Entity(keyword + DateTime.Now.ToString("yyyy-mm-dd:hh:mm:ss:ffff"), data.Environment);
+            var entity = new Entity(data.Lolicon.Entity.Name +':'+ keyword + count, data.Environment);
             entity.AddElement(building.GetType());
             (entity.GetElement(building.GetType()) as UnitElement).Lolicon = data.Lolicon;
             (entity.GetElement(building.GetType()) as UnitElement).Position = pos;
+            (entity.GetElement(building.GetType()) as UnitElement).Name = keyword + count;
+            count++;
 
             grid.Set(entity.GetElement(building.GetType()) as UnitElement, pos);
             if (building.Spread != null)
@@ -73,7 +71,6 @@ namespace lolirift.Controllers
                 data.Environment.AddEntity(entity);
 
             entity.Initialize();
-            data.Lolicon.Units.Add(entity.GetElement(building.GetType()) as UnitElement);
         }
     }
 }

@@ -59,6 +59,7 @@
     <Compile Include="GridElement.cs" />
     <Compile Include="LoliconElement.cs" />
     <Compile Include="LoliElement.cs" />
+    <Compile Include="MainBuildingElement.cs" />
     <Compile Include="UnitElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestBuildingElement.cs" />

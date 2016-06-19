@@ -15,10 +15,12 @@ namespace lolirift.Controllers
     class TrainController : Controller
     {
         private GridElement grid;
+        private int count;
 
         public TrainController(DataStore data) : base(data)
         {
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();
+            count = 0;
         }
 
         public override string Keyword
@@ -42,17 +44,15 @@ namespace lolirift.Controllers
             var keyword = j["building"].ToString();
             var loliName = j["loli"].ToString();
 
-            var building = data.Environment.Entities
-                .Where(e => e.Elements
-                .Any(el => el.GetType().IsSubclassOf(typeof(BuildableElement))))
-                .Select(e => e.Elements
-                .First(el => el.GetType().IsSubclassOf(typeof(BuildableElement))) as BuildableElement)
-                .First(e => e.Name == keyword);
+            var building = data.Lolicon.GetUnits()
+                .Where(u => u is BuildableElement)
+                .Select(u => u as BuildableElement)
+                .First(b => b.Keyword == keyword);
 
             if (building.IsTraining)
                 throw new ArgumentException();
 
-            lock(building)
+            lock (building)
                 building.IsTraining = true;
             Thread.Sleep(building.Duration * 1000);
             lock (building)
@@ -60,21 +60,23 @@ namespace lolirift.Controllers
 
             var loli = building.Lolis
                 .Select(l => FormatterServices.GetUninitializedObject(l) as LoliElement)
-                .First(l => l.Name == loliName);
+                .First(l => l.Keyword == loliName);
 
             var lolipos = new Point(building.Position.X + 1, building.Position.Y);
 
             if (grid.Get(lolipos).Unit != null)
                 throw new ArgumentException("There is already an unit");
 
-            var entity = new Entity(loliName + DateTime.Now.ToString("yyyy-mm-dd:hh:mm:ss:ffff"), data.Environment);
+            var entity = new Entity(data.Lolicon.Entity.Name + ':' + loliName + count, data.Environment);
             entity.AddElement(loli.GetType());
             (entity.GetElement(loli.GetType()) as UnitElement).Lolicon = data.Lolicon;
             (entity.GetElement(loli.GetType()) as UnitElement).Position = lolipos;
+            (entity.GetElement(loli.GetType()) as UnitElement).Name = loliName + count;
+            count++;
 
             grid.Set(entity.GetElement(loli.GetType()) as UnitElement, lolipos);
 
-            lock(data.Environment)
+            lock (data.Environment)
                 data.Environment.AddEntity(entity);
 
             entity.Initialize();

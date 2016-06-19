@@ -17,9 +17,10 @@ namespace lolirift
         public LoliconElement Lolicon;
 
         public Point Position { get; set; }
+        public string Name { get; set; }
 
         public abstract int Range { get; }
-        public abstract string Name { get; }
+        public abstract string Keyword { get; }
         public abstract Point[] Spread { get; }
 
         public UnitElement(fun.Core.Environment environment, Entity entity)
@@ -37,14 +38,15 @@ namespace lolirift
             {
                 x = Position.X,
                 y = Position.Y,
-                unit = Name,
+                unit = Keyword,
+                name = Name,
                 owner = Lolicon.Name
-
             });
 
             var json = JsonConvert.SerializeObject(new
             {
                 controller = "see",
+                source = Name,
                 seeable = seeable.ToArray()
             });
 
@@ -76,13 +78,15 @@ namespace lolirift
                     x = unit.Position.X,
                     y = unit.Position.Y,
                     owner = unit.Lolicon.Name,
-                    unit = unit.Name
+                    unit = unit.Keyword,
+                    name = unit.Name
                 });
             }
 
             var json = JsonConvert.SerializeObject(new
             {
                 controller = "see",
+                source = Name,
                 seeable = seeable.ToArray()
             });
 

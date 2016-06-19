@@ -11,7 +11,7 @@ namespace lolirift
 {
     public sealed class TestBuildingElement : BuildableElement
     {
-        public override string Name { get { return "test"; } }
+        public override string Keyword { get { return "test"; } }
         public override int Range { get { return 5; } }
         public override Type[] Lolis { get { return new[] { typeof(TestLoliElement) }; } }
         public override Point[] Spread { get { return null; } }

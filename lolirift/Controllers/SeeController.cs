@@ -25,13 +25,14 @@ namespace lolirift.Controllers
         {
             var seeable = new List<object>();
 
-            foreach (var unit in data.Lolicon.Units)
+            foreach (var unit in data.Lolicon.GetUnits())
             {
                 seeable.Add(new
                 {
                     x = unit.Position.X,
                     y = unit.Position.Y,
-                    unit = unit.Name,
+                    name = unit.Name,
+                    unit = unit.Keyword,
                     owner = unit.Lolicon.Name
                 });
 
@@ -41,7 +42,8 @@ namespace lolirift.Controllers
                     {
                         x = see.Position.X,
                         y = see.Position.Y,
-                        unit = see.Name,
+                        name = unit.Name,
+                        unit = unit.Keyword,
                         owner = see.Lolicon.Name
                     });
                 }
