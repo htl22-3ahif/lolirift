@@ -13,7 +13,7 @@ namespace lolirift.Controllers
 {
     internal sealed class BuildController : Controller
     {
-        private BuildableElement[] buildables;
+        private BuildingElement[] buildables;
         private GridElement grid;
         private int count;
 
@@ -27,8 +27,8 @@ namespace lolirift.Controllers
             grid = data.Environment.GetEntity("Grid").GetElement<GridElement>();
 
             buildables = data.Environment.GetEntity("Buildings").Elements
-                .Where(e => e.GetType().IsSubclassOf(typeof(BuildableElement)))
-                .Select(e => e as BuildableElement)
+                .Where(e => e.GetType().IsSubclassOf(typeof(BuildingElement)))
+                .Select(e => e as BuildingElement)
                 .ToArray();
         }
 
@@ -38,7 +38,7 @@ namespace lolirift.Controllers
             var pos = new Point(
                 int.Parse(j["x"].ToString()),
                 int.Parse(j["y"].ToString()));
-            BuildableElement building;
+            BuildingElement building;
 
             try { building = buildables.First(b => b.Keyword == keyword); }
             catch (Exception) { throw new ArgumentException(string.Format(

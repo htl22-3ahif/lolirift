@@ -45,8 +45,8 @@ namespace lolirift.Controllers
             var loliName = j["loli"].ToString();
 
             var building = data.Lolicon.GetUnits()
-                .Where(u => u is BuildableElement)
-                .Select(u => u as BuildableElement)
+                .Where(u => u is BuildingElement)
+                .Select(u => u as BuildingElement)
                 .First(b => b.Keyword == keyword);
 
             if (building.IsTraining)

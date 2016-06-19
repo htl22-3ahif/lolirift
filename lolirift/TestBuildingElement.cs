@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace lolirift
 {
-    public sealed class TestBuildingElement : BuildableElement
+    public sealed class TestBuildingElement : BuildingElement
     {
         public override string Keyword { get { return "test"; } }
         public override int Range { get { return 5; } }

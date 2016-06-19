@@ -47,7 +47,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildableElement.cs" />
+    <Compile Include="BuildingElement.cs" />
     <Compile Include="Controllers\BuildController.cs" />
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="Controllers\DataStore.cs" />

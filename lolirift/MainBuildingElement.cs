@@ -8,7 +8,7 @@ using fun.Core;
 
 namespace lolirift
 {
-    class MainBuildingElement : BuildableElement
+    class MainBuildingElement : BuildingElement
     {
         public MainBuildingElement(fun.Core.Environment environment, Entity entity) 
             : base(environment, entity)
