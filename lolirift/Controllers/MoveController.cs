@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Drawing;
+using System.Threading;
 
 namespace lolirift.Controllers
 {
@@ -54,18 +55,20 @@ namespace lolirift.Controllers
                 X = vector.X / length,
                 Y = vector.Y / length
             };
-            var startTime = DateTime.Now;
+            var time = DateTime.Now;
+            var covered = 0.0;
 
             while (loli.Position != to)
             {
-                var time = (DateTime.Now - startTime).TotalSeconds;
+                var delta = (DateTime.Now - time).TotalSeconds;
+                time = DateTime.Now;
 
-                var covered = loli.Speed * time;
+                covered += loli.Speed * delta;
                 covered = Math.Min(covered, length);
 
                 var x = direction.X * covered;
                 var y = direction.Y * covered;
-                Console.WriteLine("delta={0}", time);
+                Console.WriteLine("delta={0}", delta);
                 Console.WriteLine("x={0} ; y={1}",x,y);
 
                 var old = loli.Position;
