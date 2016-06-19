@@ -40,7 +40,8 @@ namespace lolirift.Controllers
                 .Where(u => u is LoliElement)
                 .Select(u => u as LoliElement)
                 .First(l => l.Name == name);
-            
+
+            var from = loli.Position;
             var to = new Point(
                 int.Parse(j["x"].ToString()),
                 int.Parse(j["y"].ToString()));
@@ -53,24 +54,32 @@ namespace lolirift.Controllers
                 X = vector.X / length,
                 Y = vector.Y / length
             };
-            var covered = 0.0;
             var startTime = DateTime.Now;
 
             while (loli.Position != to)
             {
-                var delta = (DateTime.Now - startTime).TotalSeconds;
-                covered += loli.Speed * delta;
+                var time = (DateTime.Now - startTime).TotalSeconds;
+
+                var covered = loli.Speed * time;
                 covered = Math.Min(covered, length);
+
                 var x = direction.X * covered;
                 var y = direction.Y * covered;
+                Console.WriteLine("delta={0}", time);
                 Console.WriteLine("x={0} ; y={1}",x,y);
-                lock (grid)
-                    grid.Set(null, loli.Position);
+
+                var old = loli.Position;
+
                 loli.Position = new Point(
-                    loli.Position.X + (int)Math.Floor(x),
-                    loli.Position.Y + (int)Math.Floor(y));
-                lock (grid)
-                    grid.Set(loli, loli.Position);
+                    from.X + (int)Math.Floor(x),
+                    from.Y + (int)Math.Floor(y));
+
+                if (old != loli.Position)
+                    lock (grid)
+                    {
+                        grid.Set(null, old);
+                        grid.Set(loli, loli.Position);
+                    }
             }
         }
     }

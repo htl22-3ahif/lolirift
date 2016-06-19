@@ -12,7 +12,8 @@ namespace lolirift
 {
     public abstract class UnitElement : Element
     {
-        UnitElement[] lastUnits;
+        private UnitElement[] lastUnits;
+        private Point oldPosition;
 
         public LoliconElement Lolicon;
 
@@ -31,23 +32,20 @@ namespace lolirift
         public override void Initialize()
         {
             lastUnits = new UnitElement[0];
-
-            var seeable = new List<object>();
-
-            seeable.Add(new
-            {
-                x = Position.X,
-                y = Position.Y,
-                unit = Keyword,
-                name = Name,
-                owner = Lolicon.Name
-            });
+            oldPosition = Position;
 
             var json = JsonConvert.SerializeObject(new
             {
                 controller = "see",
-                source = Name,
-                seeable = seeable.ToArray()
+                source = new
+                {
+                    x = Position.X,
+                    y = Position.Y,
+                    unit = Keyword,
+                    name = Name,
+                    owner = Lolicon.Name
+                },
+                seeable = new object[] { }
             });
 
             Lolicon.Send(json);
@@ -86,13 +84,44 @@ namespace lolirift
             var json = JsonConvert.SerializeObject(new
             {
                 controller = "see",
-                source = Name,
+                source = new
+                {
+                    x = Position.X,
+                    y = Position.Y,
+                    unit = Keyword,
+                    name = Name,
+                    owner = Lolicon.Name
+                },
                 seeable = seeable.ToArray()
             });
 
             Lolicon.Send(json);
 
             lastUnits = units;
+        }
+
+        public override void Update(double time)
+        {
+            if (oldPosition != Position)
+            {
+                var json = JsonConvert.SerializeObject(new
+                {
+                    controller = "see",
+                    source = new
+                    {
+                        x = Position.X,
+                        y = Position.Y,
+                        unit = Keyword,
+                        name = Name,
+                        owner = Lolicon.Name
+                    },
+                    seeable = new object[] { }
+                });
+
+                Lolicon.Send(json);
+            }
+
+            oldPosition = Position;
         }
 
         public UnitElement[] InRangeUnits()
@@ -116,6 +145,9 @@ namespace lolirift
                         var g = grid.Get(new Point(x, y));
 
                         if (g.Unit == null)
+                            continue;
+
+                        if (g.Unit.Lolicon == Lolicon)
                             continue;
 
                         units.Add(g.Unit);

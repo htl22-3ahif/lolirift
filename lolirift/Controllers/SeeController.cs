@@ -52,6 +52,7 @@ namespace lolirift.Controllers
             var response = new
             {
                 controller = "see",
+                source = new {},
                 seeable = seeable.ToArray()
             };
 

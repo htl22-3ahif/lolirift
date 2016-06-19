@@ -22,11 +22,7 @@ namespace lolirift.Client
                 var j = JsonConvert.DeserializeObject<JObject>(e.Data);
 
                 Console.WriteLine("Server says: ");
-                foreach (var prop in j.Properties())
-                {
-                    Console.WriteLine("  " + prop.Name + ":" + prop.Value.ToString());
-                }
-
+                Console.WriteLine(j.ToString());
                 Console.WriteLine();
             };
 
@@ -37,6 +33,7 @@ namespace lolirift.Client
                 try
                 {
                     line = Console.ReadLine();
+                    Console.WriteLine();
                     var props = line.Split(' ');
                     var j = new JObject();
 
