@@ -60,8 +60,14 @@ namespace lolirift.Controllers
 
             while (loli.Position != to)
             {
+                Thread.Sleep(500);
                 var delta = (DateTime.Now - time).TotalSeconds;
                 time = DateTime.Now;
+                var nextField = new Point(
+                    loli.Position.X + (Math.Abs(1 / (direction.X * covered * delta)) <= Math.Abs(1 / (direction.Y * covered * delta)) ? vector.X / Math.Abs(vector.X) : 0),
+                    loli.Position.Y + (Math.Abs(1 / (direction.X * covered * delta)) >= Math.Abs(1 / (direction.Y * covered * delta)) ? vector.Y / Math.Abs(vector.Y) : 0));
+
+                Console.WriteLine(nextField);
 
                 covered += loli.Speed * delta;
                 covered = Math.Min(covered, length);
