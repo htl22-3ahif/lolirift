@@ -20,5 +20,9 @@
   <Entity Name="Buildings" Enable="false">
     <Element Type="TestBuildingElement" />
   </Entity>
+
+  <Entity Name="Lolis" Enable="false">
+    <Element Type="TestLoliElement" />
+  </Entity>
   
 </Environment>

@@ -21,7 +21,7 @@ namespace lolirift
         public string Name { get; set; }
 
         public abstract int Range { get; }
-        public abstract string Keyword { get; }
+        public abstract string Type { get; }
         public abstract Point[] Spread { get; }
 
         public UnitElement(fun.Core.Environment environment, Entity entity)
@@ -41,7 +41,7 @@ namespace lolirift
                 {
                     x = Position.X,
                     y = Position.Y,
-                    unit = Keyword,
+                    unit = Type,
                     name = Name,
                     owner = Lolicon.Name
                 },
@@ -76,7 +76,7 @@ namespace lolirift
                     x = unit.Position.X,
                     y = unit.Position.Y,
                     owner = unit.Lolicon.Name,
-                    unit = unit.Keyword,
+                    unit = unit.Type,
                     name = unit.Name
                 });
             }
@@ -88,7 +88,7 @@ namespace lolirift
                 {
                     x = Position.X,
                     y = Position.Y,
-                    unit = Keyword,
+                    unit = Type,
                     name = Name,
                     owner = Lolicon.Name
                 },
@@ -111,7 +111,7 @@ namespace lolirift
                     {
                         x = Position.X,
                         y = Position.Y,
-                        unit = Keyword,
+                        unit = Type,
                         name = Name,
                         owner = Lolicon.Name
                     },

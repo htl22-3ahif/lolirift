@@ -32,7 +32,7 @@ namespace lolirift.Controllers
                     x = unit.Position.X,
                     y = unit.Position.Y,
                     name = unit.Name,
-                    unit = unit.Keyword,
+                    unit = unit.Type,
                     owner = unit.Lolicon.Name
                 });
 
@@ -43,7 +43,7 @@ namespace lolirift.Controllers
                         x = see.Position.X,
                         y = see.Position.Y,
                         name = unit.Name,
-                        unit = unit.Keyword,
+                        unit = unit.Type,
                         owner = see.Lolicon.Name
                     });
                 }

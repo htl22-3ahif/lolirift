@@ -23,15 +23,7 @@ namespace lolirift
             }
         }
 
-        public override Type[] Lolis
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public override string Keyword
+        public override string Type
         {
             get
             {
@@ -48,6 +40,14 @@ namespace lolirift
         }
 
         public override Point[] Spread
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public override string[] Lolis
         {
             get
             {

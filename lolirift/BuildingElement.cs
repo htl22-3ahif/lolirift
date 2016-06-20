@@ -12,7 +12,7 @@ namespace lolirift
 {
     public abstract class BuildingElement : UnitElement
     {
-        public abstract Type[]Lolis { get; }
+        public abstract string[] Lolis { get; }
         public abstract int TrainDuration { get; }
 
         public bool IsTraining { get; set; }

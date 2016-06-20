@@ -11,6 +11,9 @@ namespace lolirift.Controllers
 {
     class MoveController : Controller
     {
+        private const double MIN = 0.2;
+        private const double MAX = 1.5;
+
         private GridElement grid;
 
         public MoveController(DataStore data) : base(data)
@@ -56,25 +59,32 @@ namespace lolirift.Controllers
                 Y = vector.Y / length
             };
             var time = DateTime.Now;
-            var covered = 0.0;
+            var covered = 0.00001;
 
             while (loli.Position != to)
             {
-                Thread.Sleep(500);
+                Thread.Sleep(200);
                 var delta = (DateTime.Now - time).TotalSeconds;
                 time = DateTime.Now;
-                var nextField = new Point(
-                    loli.Position.X + (Math.Abs(1 / (direction.X * covered * delta)) <= Math.Abs(1 / (direction.Y * covered * delta)) ? vector.X / Math.Abs(vector.X) : 0),
-                    loli.Position.Y + (Math.Abs(1 / (direction.X * covered * delta)) >= Math.Abs(1 / (direction.Y * covered * delta)) ? vector.Y / Math.Abs(vector.Y) : 0));
 
+                var nextField = new Point(
+                    loli.Position.X + 
+                        (Math.Abs(1 / (direction.X * covered)) <= Math.Abs(1 / (direction.Y * covered))
+                        ? vector.X / Math.Abs(vector.X) : 0),
+                    loli.Position.Y + 
+                        (Math.Abs(1 / (direction.X * covered)) >= Math.Abs(1 / (direction.Y * covered))
+                        ? vector.Y / Math.Abs(vector.Y) : 0));
                 Console.WriteLine(nextField);
 
-                covered += loli.Speed * delta;
+                var error = grid.Get(nextField).Height - grid.Get(loli.Position).Height;
+                var factor = f(error);
+                Console.WriteLine("error:{0}\nfactor:{1}", error, factor);
+
+                covered += loli.Speed * delta * factor;
                 covered = Math.Min(covered, length);
 
                 var x = direction.X * covered;
                 var y = direction.Y * covered;
-                Console.WriteLine("delta={0}", delta);
                 Console.WriteLine("x={0} ; y={1}",x,y);
 
                 var old = loli.Position;
@@ -90,6 +100,14 @@ namespace lolirift.Controllers
                         grid.Set(loli, loli.Position);
                     }
             }
+        }
+
+        private double f(double x)
+        {
+            var a = (MAX + MIN - 2) / (2 * 255 * 255);
+            var b = ((MAX - 1) - 255 * 255 * a) / 255;
+
+            return (x * x * a) + (x * b) + 1;
         }
     }
 }
