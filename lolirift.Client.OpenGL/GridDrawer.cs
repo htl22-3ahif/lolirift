@@ -20,8 +20,28 @@ namespace lolirift.Client.OpenGL
 
         public void Draw(FrameEventArgs e)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+            for (int x = 0; x < data.Grid.Width; x++)
+            {
+                for (int y = 0; y < data.Grid.Height; y++)
+                {
+                    GL.Begin(BeginMode.Quads);
+                    var height = data.Grid.Get(x, y).Height;
+
+                    GL.Color3(height, height, height);
+                    GL.Vertex3(x, -y, 0);
+
+                    GL.Color3(height, height, height);
+                    GL.Vertex3(x + 1, -y, 0);
+
+                    GL.Color3(height, height, height);
+                    GL.Vertex3(x + 1, -y + 1, 0);
+
+                    GL.Color3(height, height, height);
+                    GL.Vertex3(x, -y + 1, 0);
+
+                    GL.End();
+                }
+            }
         }
     }
 }

@@ -16,12 +16,11 @@ namespace lolirift.Client.OpenGL
 {
     class LoliriftGame : GameWindow
     {
-        private MouseState curr;
-        private MouseState prev;
-
         WebSocket ws;
         DataStore data;
         Controller[] controllers;
+        GridDrawer griddrawer;
+        Camera camera;
 
         public LoliriftGame(string endPoint, int width, int height)
             : base(width, height)
@@ -31,6 +30,9 @@ namespace lolirift.Client.OpenGL
             {
                 new MapController(data)
             };
+
+            griddrawer = new GridDrawer(data);
+            camera = new Camera(this);
 
             ws = new WebSocket(endPoint);
             ws.OnMessage += OnMessage;
@@ -53,35 +55,14 @@ namespace lolirift.Client.OpenGL
         protected override void OnLoad(EventArgs e)
         {
             GL.ClearColor(Color.CornflowerBlue);
-
-            prev = OpenTK.Input.Mouse.GetState();
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
-            //if (data.Grid == null)
-            //    return;
+            if (data.Grid == null)
+                return;
 
-            //var delta = new Vector3();
-
-            //curr = OpenTK.Input.Mouse.GetState();
-            //if (curr != prev)
-            //    delta = new Vector3(
-            //        (prev.X - curr.X),
-            //        (prev.Y - curr.Y),
-            //        prev.Wheel - curr.Wheel);
-            //else
-            //    delta = Vector3.Zero;
-
-            //prev = curr;
-
-            //if (curr.IsButtonDown(MouseButton.Left))
-            //    data.Grid.Position += new Vector2(-delta.X, delta.Y);
-
-            //if (delta.Z < 0)
-            //    data.Grid.Scale += 0.1f * data.Grid.Scale;
-            //else if (delta.Z > 0)
-            //    data.Grid.Scale -= 0.1f * data.Grid.Scale;
+            camera.Update(e);
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
@@ -89,7 +70,13 @@ namespace lolirift.Client.OpenGL
             if (data.Grid == null)
                 return;
 
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            //GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
+
             base.OnRenderFrame(e);
+
+            camera.Draw(e);
+            griddrawer.Draw(e);
 
             this.SwapBuffers();
         }

@@ -44,18 +44,6 @@ ws.onopen = function(){
         });
     });
   
-    // $( 'html' ).bind('mousewheel', function(e){
-        // if(e.originalEvent.wheelDelta / 120 > 0) {
-            // scale += 0.1 * scale;
-        // }
-        // else{
-            // scale -= 0.1 * scale;
-        // }
-        // $('#grid').css({
-            // 'transform': 'scale('+scale+')'
-        // });
-    // });
-  
     $( '#build' ).click(function(e){
         $('#modal').append(modals['build']);
         $('#modal').css('display', 'block');

@@ -40,7 +40,7 @@ namespace lolirift.Controllers
                 controller = "map",
                 width = grid.Width,
                 height = grid.Height,
-                heightmap = grid.Grid.Select(f => f.Height).ToArray()
+                heightmap = grid.Grid.Select(f => (int)f.Height).ToArray()
             };
 
             var json = JsonConvert.SerializeObject(response);

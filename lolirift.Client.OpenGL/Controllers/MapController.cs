@@ -28,6 +28,11 @@ namespace lolirift.Client.OpenGL.Controllers
                 int.Parse(j["height"].ToString())
             );
 
+            for (int i = 0; i < data.Grid.grid.Length; i++)
+            {
+                data.Grid.grid[i].Height = byte.Parse(j["heightmap"][i].ToString());
+            }
+
             Console.WriteLine("Width: " + data.Grid.Width);
             Console.WriteLine("Height: " + data.Grid.Height);
         }
