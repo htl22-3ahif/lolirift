@@ -5,9 +5,9 @@
   
   <Entity Name="Grid">
     <Element Type="GridElement">
-      <Field Name="Width">100</Field>
-      <Field Name="Height">100</Field>
-      <Field Name="Heightmap">heightmap.bmp</Field>
+      <Field Name="Width">1000</Field>
+      <Field Name="Height">1000</Field>
+      <Field Name="Heightmap">heightmap1000.bmp</Field>
     </Element>
   </Entity>
   

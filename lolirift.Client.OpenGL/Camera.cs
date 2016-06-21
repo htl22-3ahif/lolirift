@@ -25,6 +25,9 @@ namespace lolirift.Client.OpenGL
 
         public void Update(FrameEventArgs e)
         {
+            if (!game.Focused)
+                return;
+
             var delta = new Vector3();
 
             curr = Mouse.GetState();
@@ -41,13 +44,14 @@ namespace lolirift.Client.OpenGL
             if (curr.IsButtonDown(MouseButton.Left))
                 Position += new Vector3(delta.X * (Position.Z / 1000), -delta.Y * (Position.Z / 1000), 0);
 
-            Position += new Vector3(0, 0, delta.Z);
+            Position += new Vector3(0, 0, delta.Z * (Position.Z / 10));
         }
 
         public void Draw(FrameEventArgs e)
         {
             GL.MatrixMode(MatrixMode.Projection);
-            var proj = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, (float)game.Width / (float)game.Height, 0.001f, 1000);//Matrix4.CreateOrthographic(game.Width, game.Height, 0, 10000);
+            var proj = Matrix4.CreatePerspectiveFieldOfView(
+                MathHelper.PiOver4, (float)game.Width / (float)game.Height, 0.001f, 100000);
             GL.LoadMatrix(ref proj);
             GL.MatrixMode(MatrixMode.Modelview);
             var view = Matrix4.LookAt(Position, Position + new Vector3(0, 0, -1), new Vector3(0, 1, 0));

@@ -31,8 +31,8 @@ namespace lolirift.Client.OpenGL
                 new MapController(data)
             };
 
-            griddrawer = new GridDrawer(data);
             camera = new Camera(this);
+            griddrawer = new GridDrawer(data,camera);
 
             ws = new WebSocket(endPoint);
             ws.OnMessage += OnMessage;
