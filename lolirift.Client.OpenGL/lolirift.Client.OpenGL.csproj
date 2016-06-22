@@ -54,6 +54,7 @@
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="GridDrawer.cs" />
+    <Compile Include="HudDrawer.cs" />
     <Compile Include="LoliriftGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
