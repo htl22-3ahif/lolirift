@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using lolirift.Client.OpenGL.Controllers;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using System;
@@ -14,17 +15,22 @@ namespace lolirift.Client.OpenGL
         private MouseState curr;
         private MouseState prev;
         private GameWindow game;
+        private DataStore data;
 
         public Vector3 Position { get; set; }
 
-        public Camera(GameWindow game)
+        public Camera(GameWindow game, DataStore data)
         {
             this.game = game;
+            this.data = data;
             this.Position = new Vector3(0, 0, 10);
         }
 
         public void Update(FrameEventArgs e)
         {
+            if (data.Grid == null)
+                return;
+
             if (!game.Focused)
                 return;
 
@@ -45,6 +51,11 @@ namespace lolirift.Client.OpenGL
                 Position += new Vector3(delta.X * (Position.Z / 1000), -delta.Y * (Position.Z / 1000), 0);
 
             Position += new Vector3(0, 0, delta.Z * (Position.Z / 10));
+
+            Position = new Vector3(
+                Math.Max(0, Math.Min(data.Grid.Width, Position.X)),
+                Math.Min(0, Math.Max(-data.Grid.Height, Position.Y)),
+                Math.Max(0, Math.Min(65, Position.Z)));
         }
 
         public void Draw(FrameEventArgs e)
